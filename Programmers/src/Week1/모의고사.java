@@ -21,10 +21,8 @@ public class 모의고사 {
 		for(int i=0; i<answers.length; i++) {
 			if(p[0]==nomath[0].length) p[0]=0;
 			if(nomath[0][p[0]++]==answers[i]) a[0]++;
-			
 			if(p[1]==nomath[1].length) p[1]=0;
-			if(nomath[1][p[1]++]==answers[i]) a[1]++;
-			
+			if(nomath[1][p[1]++]==answers[i]) a[1]++;	
 			if(p[2]==nomath[2].length) p[2]=0;
 			if(nomath[2][p[2]++]==answers[i]) a[2]++;
 		}
