@@ -13,7 +13,7 @@ public class 하샤드수 {
 				sum += input%10;
 				input/=10;
 		  }
-		  return (x%sum==0) ? true : false;
+		  return x%sum==0;
 	}
 
 }
