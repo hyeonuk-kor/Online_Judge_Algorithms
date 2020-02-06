@@ -1,12 +1,12 @@
 class Solution {
-    public int solution(String dirs) {
-        int answer = 0;
+	public int solution(String dirs) {
+		int answer = 0;
 		boolean[][][] c = new boolean[11][11][4];
-		
+
 		int[][] dir = {{-1,0},{1,0},{0,1},{0,-1}};
 		int si=5, sj=5;
 		int ni=0, nj=0;
-		
+
 		for(int i=0; i<dirs.length(); i++) {
 			if(dirs.charAt(i)=='U') {
 				ni = si + dir[0][0];
@@ -45,9 +45,9 @@ class Solution {
 					sj = nj;
 				}
 			}
-			
+
 		}
-		
+
 		for(int i=0; i<11; i++) {
 			for(int j=0; j<11; j++) {
 				for(int k=0; k<4; k++) {
@@ -55,7 +55,7 @@ class Solution {
 				}
 			}
 		}
-		
+
 		return answer/2;
-    }
+	}
 }
