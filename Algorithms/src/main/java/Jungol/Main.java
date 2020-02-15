@@ -1,4 +1,6 @@
+package Jungol;
 
+//기본
 public class Main {
 
 	public static void main(String[] args) {

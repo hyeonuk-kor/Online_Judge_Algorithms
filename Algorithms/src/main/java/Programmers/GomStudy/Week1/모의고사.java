@@ -1,4 +1,4 @@
-package Week1;
+package Programmers.GomStudy.Week1;
 
 import java.util.Arrays;
 

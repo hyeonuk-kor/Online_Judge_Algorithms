@@ -1,12 +1,12 @@
-package Week1;
+package Programmers.GomStudy.Week1;
 
-class Point {
+class Point1 {
 	int x;
 	int y;
 	char dir; //방향
 	boolean[][][] check; //x, y, 방향체크
 	
-	public Point(int x, int y, char dir) {
+	public Point1(int x, int y, char dir) {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
@@ -84,7 +84,7 @@ public class 방문길이 {
 	public static int solution(String dirs) {
         int answer = 0;
 		
-        Point p = new Point(5, 5, dirs.charAt(0)); //출발준비
+        Point1 p = new Point1(5, 5, dirs.charAt(0)); //출발준비
         p.check = new boolean[11][11][4];
         
 		for(int i=0; i<dirs.length(); i++) {

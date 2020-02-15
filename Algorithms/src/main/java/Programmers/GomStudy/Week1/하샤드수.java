@@ -1,4 +1,4 @@
-package Week1;
+package Programmers.GomStudy.Week1;
 
 public class 하샤드수 {
 
