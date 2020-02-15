@@ -10,9 +10,7 @@
 ### SWExperts : https://swexpertacademy.com/main/main.do
 <br>
 
-## src/main/java : Solution Code
-<br>
-## src/main/test : Testcase
+## src/main/java : Solution Code , src/main/test : Testcase
 <br>
 
-감사합니다.
+## 감사합니다.
