@@ -4,5 +4,6 @@
 #### Baekjoon : https://www.acmicpc.net/
 #### Jungol : http://jungol.co.kr/
 #### SWExperts : https://swexpertacademy.com/main/main.do
+# Folder structure
 ##### src/main/java : Solution Code
 ##### src/main/test : Testcase
