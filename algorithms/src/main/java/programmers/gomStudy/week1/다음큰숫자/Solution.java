@@ -1,10 +1,6 @@
-package programmers.gomStudy.week1;
+package programmers.gomStudy.week1.다음큰숫자;
 
-public class 다음큰숫자 {
-
-	public static void main(String[] args) {
-		System.out.println(solution(78));
-	}
+public class Solution {
 
 	public static int solution(int n) {
 		int input = n;

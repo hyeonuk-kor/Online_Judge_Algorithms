@@ -1,5 +1,4 @@
-package programmers.gomStudy.week1.solution방문길이;
-
+package programmers.gomStudy.week1.방문길이;
 
 import java.util.ArrayList;
 import java.util.HashSet;
