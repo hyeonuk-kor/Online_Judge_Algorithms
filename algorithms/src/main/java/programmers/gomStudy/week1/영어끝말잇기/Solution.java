@@ -13,14 +13,14 @@ public class Solution {
               
         for(int i=1; i<words.length; i++) { //다음 단어부터 시작
         	start = words[i].charAt(0);
-        	hashSet.add(words[i]);
-        	
-        	if(end!=start || hashSet.size()!=i+1) { //중복 된 단어가 있다면 해시셋 사이즈가 다를 것이다.
+
+        	if(end!=start || hashSet.contains(words[i])) { //중복 된 단어가 있거나 시작과 끝 알파벳이 다르다면
         		answer[0] = (i%n)+1;
         		answer[1] = (i/n)+1;
         		break;
         	}
-        	end = words[i].charAt(words[i].length()-1);        	
+        	end = words[i].charAt(words[i].length()-1);    
+        	hashSet.add(words[i]);
         }
 
         return answer;
