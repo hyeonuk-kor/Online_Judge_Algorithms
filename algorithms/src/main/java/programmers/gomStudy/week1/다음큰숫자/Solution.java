@@ -2,7 +2,7 @@ package programmers.gomStudy.week1.다음큰숫자;
 
 public class Solution {
 
-	public static int solution(int n) {
+	public  int solution(int n) {
 		int input = n;
 		int oneCount = binOneCount(input);
 		int nextOneCount = binOneCount(++input);
