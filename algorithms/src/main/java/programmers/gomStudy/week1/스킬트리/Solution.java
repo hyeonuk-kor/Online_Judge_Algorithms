@@ -6,24 +6,17 @@ public class Solution {
 	public int solution(String skill, String[] skill_trees) {
 		int answer = 0;
 		
-		for(int i=0; i<skill_trees.length; i++) {
+		loop:for(int i=0; i<skill_trees.length; i++) {
 			int index = 0;
-			boolean flag = true;
 			
 			for(int j=0; j<skill_trees[i].length(); j++) {
 				if(index == skill.indexOf(skill_trees[i].charAt(j))) {
 					index++;
 				} else if (index < skill.indexOf(skill_trees[i].charAt(j))) {
-					flag = false;
-					break;
+					continue loop;
 				}
 			}
-			
-			if(flag) {
-				System.out.println(i);
-				answer++;
-			}
-			
+			answer++;
 		}
 
 		return answer;
