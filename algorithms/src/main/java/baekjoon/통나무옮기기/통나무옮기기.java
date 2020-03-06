@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.통나무옮기기;
 
 import java.io.BufferedReader;
 import java.io.IOException;
