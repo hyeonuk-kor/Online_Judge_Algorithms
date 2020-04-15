@@ -144,7 +144,7 @@ public class Main {
 					} else { 
 						for(Iterator<Point> it = set.iterator(); it.hasNext();) {
 							Point value = it.next();
-							if(value.getX()==tail.getX() && value.getY()==tail.getY()) {
+							if(value.equals(tail)) {
 								it.remove(); //사과가 없으므로 꼬리부분을 자른다.
 							}
 						}
@@ -160,7 +160,7 @@ public class Main {
 			
 			for(Iterator<Point> it = set.iterator(); it.hasNext();) { //다음 좌표가 뱀의 몸과 충돌하는 경우를 체크
 				Point value = it.next();
-				if(value.getX()==currentX && value.getY()==currentY) {
+				if(value.equals(new Point(currentX, currentY))) {
 					answer = i+1; //다음 초에 게임 over 
 				}
 			}
