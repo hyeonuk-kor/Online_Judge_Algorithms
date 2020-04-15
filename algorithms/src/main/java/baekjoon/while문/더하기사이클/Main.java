@@ -12,7 +12,6 @@ public class Main {
 		int count = 0;
 		int newN = -1;
 		
-
 		while(N!=newN) {
 			int A = N2/10;
 			int B = N2%10;
