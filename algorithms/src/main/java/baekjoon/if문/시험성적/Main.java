@@ -18,6 +18,7 @@ public class Main {
 			System.out.println("D");
 		else
 			System.out.println("F");
+		sc.close();
 	}
 
 }

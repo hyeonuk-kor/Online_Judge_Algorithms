@@ -28,7 +28,7 @@ public class 모래성쌓기 {
                         map[r][c] = str.charAt(c) - '0';
                 }
             }
-            Queue queue = new LinkedList<>();
+            Queue<Node> queue = new LinkedList<>();
             for(int r = 0; r < H; r++) {
                 for(int c = 0; c < W; c++) {
                     //바다라면

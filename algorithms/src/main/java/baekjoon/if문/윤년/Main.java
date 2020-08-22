@@ -9,6 +9,7 @@ public class Main {
 		int year = sc.nextInt();
 		
 		System.out.println( (year%100!=0 && year%4==0 || year%400==0 ? 1 : 0));
+		sc.close();
 	}
 
 }

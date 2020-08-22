@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class Main {
 
 	static int N,M,K;
-	static ArrayList[][] mapTree;
+	static ArrayList<Tree>[][] mapTree;
 	static int[][] a; //로봇이 채울 양분정보
 	static int[][] map;
 	static int dx[] = {-1,-1,-1,0,0,1,1,1};

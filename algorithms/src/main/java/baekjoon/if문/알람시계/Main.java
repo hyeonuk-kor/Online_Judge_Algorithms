@@ -20,7 +20,7 @@ public class Main {
 			H = 0;
 		
 		System.out.println(H+" "+M);
-		
+		sc.close();
 	}
 
 }
