@@ -341,3 +341,9 @@ dmypy.json
 .pytype/
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python
+python/.idea/inspectionProfiles/profiles_settings.xml
+python/.idea/misc.xml
+python/.idea/modules.xml
+python/.idea/python.iml
+python/.idea/vcs.xml
+python/.idea/workspace.xml
