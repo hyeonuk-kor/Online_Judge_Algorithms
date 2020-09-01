@@ -17,8 +17,8 @@ public class Main {
 		int answer = -1;
 		int min = (int)Math.ceil((double)N/5);
 		int max = (int)Math.floor((double)N/3);
-		System.out.println(min);
-		System.out.println(max);
+//		System.out.println(min);
+//		System.out.println(max);
 		for(int i=min; i<=max; i++) {
 			if(i%2==N%2) {
 				answer = i;
