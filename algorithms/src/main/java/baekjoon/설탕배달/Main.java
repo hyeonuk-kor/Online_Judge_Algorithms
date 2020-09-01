@@ -14,7 +14,18 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 		
-		int answer = 0;
+		int answer = -1;
+		int min = (int)Math.ceil((double)N/5);
+		int max = (int)Math.floor((double)N/3);
+		System.out.println(min);
+		System.out.println(max);
+		for(int i=min; i<=max; i++) {
+			if(i%2==N%2) {
+				answer = i;
+				break;
+			}
+		}
+		/*
 		while(N!=0) {
 			if(N%5==0) {
 				N-=5;
@@ -30,6 +41,7 @@ public class Main {
 				break;
 			}
 		}
+		*/
 		
 		System.out.println(answer);
 		
