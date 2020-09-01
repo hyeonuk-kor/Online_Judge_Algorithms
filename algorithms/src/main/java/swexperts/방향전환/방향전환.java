@@ -28,7 +28,7 @@ public class 방향전환 {
             fy = sc.nextInt() + 100;
             
             //BFS탐색을 위한 Queue자료구조를 준비
-            Queue queue = new LinkedList<>();
+            Queue<Point> queue = new LinkedList<>();
             //방문체크를 위한 방문체크 변수를 준비
             boolean[][][] visited = new boolean[201][201][2];
             //시작점을 큐에 삽입

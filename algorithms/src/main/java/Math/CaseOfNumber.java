@@ -19,7 +19,7 @@ public class CaseOfNumber {
          
         //중복순열 (순서있게 배열 + 자시자신도 포함)
         System.out.println("***중복순열(0,1,2)***");
-        LinkedList<Integer> rePerArr = new LinkedList<Integer>();   
+//        LinkedList<Integer> rePerArr = new LinkedList<Integer>();   
         rePermutation(n, r, perArr);
          
         //조합 (순서관심없고 뽑은 유무만 생각)
@@ -32,7 +32,7 @@ public class CaseOfNumber {
         System.out.println("***중복조합(0,1,2)***");
         int[] reComArr = new int[r];
         reCombination(reComArr, n, r, 0, 0);
-         
+        sc.close();
  
     }
      
