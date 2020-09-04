@@ -11,11 +11,9 @@ public class 다이얼 {
 		char[] dials = new BufferedReader(new InputStreamReader(System.in)).readLine().toCharArray();
 		int time = 0;
 		for(char i: dials) {
-			System.out.print(i+" ");
 			time += (i-'A')/3+3;
 			if(i=='S'||i=='V'||i=='Y'||i=='Z')
 				time--;
-			System.out.println(time);
 		}
 		System.out.println(time);
 		
