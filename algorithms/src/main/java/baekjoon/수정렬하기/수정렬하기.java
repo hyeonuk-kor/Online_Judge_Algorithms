@@ -13,7 +13,7 @@ public class 수정렬하기 {
 		
 		int[] num = new int[N];
 		for (int i = 0; i < N; i++) {
-			num[i]=Integer.parseInt(br.readLine())
+			num[i]=Integer.parseInt(br.readLine());
 		}
 		
 		Arrays.sort(num);
