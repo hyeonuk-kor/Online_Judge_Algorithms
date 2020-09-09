@@ -11,9 +11,9 @@ public class 분해합 {
 		
 		int answer = 0;
 		
-		for(int i=1; i<=N; i++) {
-			int M = i;
-			int sum = i;
+		for(int num=1; num<=N; num++) {
+			int M = num;
+			int sum = num;
 			
 			while(M!=0) {
 				int calc = M%10;
@@ -22,7 +22,7 @@ public class 분해합 {
 			}
 			
 			if(sum==N) {
-				answer = i;
+				answer = num;
 				break;
 			}
 		}
