@@ -2,7 +2,6 @@ package baekjoon.수정렬하기;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 public class 수정렬하기 {
 
@@ -11,15 +10,19 @@ public class 수정렬하기 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		
-		int[] num = new int[N];
+		boolean[] check = new boolean[2000001];
+		
 		for (int i = 0; i < N; i++) {
-			num[i]=Integer.parseInt(br.readLine());
+			int num = Integer.parseInt(br.readLine());
+			check[num+1000000]=true;
 		}
 		
-		Arrays.sort(num);
-		for (int i = 0; i < num.length; i++) {
-			System.out.println(num[i]);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < check.length; i++) {
+			if(check[i])
+				sb.append(i-1000000).append('\n');
 		}
+		System.out.println(sb);
 	}
 
 }
