@@ -31,7 +31,7 @@ public class 통계학 {
 		int mid = IntStream.of(number).sorted().toArray()[number.length/2];
 		
 		//3. 최빈값 : N개의 수들 중 가장 많이 나타나는 값
-		int maxf = IntStream.of(number)
+//		int maxf = IntStream.of(number)
 		
 		//4. 범위 : N개의 수들 중 최댓값과 최솟값의 차이
 		
