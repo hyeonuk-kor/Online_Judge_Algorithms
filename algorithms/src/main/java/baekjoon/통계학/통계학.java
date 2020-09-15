@@ -25,11 +25,14 @@ public class 통계학 {
 		double sum = 0;
 		for(int i=0; i<number.length; i++)
 			sum+=number[i];
+//		int sum = IntStream.of(number).sum();
+		
 		int avg = (int) Math.round((double)sum/N);
 
 		//2. 중앙값 : N개의 수들을 증가하는 순서로 나열했을 경우 그 중앙에 위치하는 값
 		int mid = number[number.length/2];
-
+//		int mid = IntStream.of(number).sorted().toArray()[number.length/2];
+		
 		//3. 최빈값 : N개의 수들 중 가장 많이 나타나는 값
 		int[] signNumber = new int[8001]; //4000미만의 수는 음수, 4000=0, 4000초과 수는 양수 
 		for(int i=0; i<number.length; i++) //카운팅 정렬
@@ -57,7 +60,7 @@ public class 통계학 {
 		
 		if(count==0) {
 			mode = getNumber[0]; //최빈 값의 후보가 하나라면 바로 mode를 구할 수 있다.
-		} else if(count>1) { //최빈 값의 후보가 여러개라면
+		} else { //최빈 값의 후보가 여러개라면
 			int[] preSet = new int[count]; //후보들을 정렬하기 위해 배열을 만든다.
 			for (int i = 0; i < preSet.length; i++) { // 값을 넣어주고
 				preSet[i] = getNumber[i];
