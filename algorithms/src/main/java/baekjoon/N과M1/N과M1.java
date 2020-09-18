@@ -24,10 +24,10 @@ public class N과M1 {
 		
 		sb = new StringBuilder();
 		permArr = new ArrayList<>();
-		for(int i=1; i<=N; i++) {
+		for(Integer i=1; i<=N; i++) {
 			permArr.add(i);
 			perm(i);
-			permArr.remove(new Integer(i));
+			permArr.remove(i);
 		}
 		
 		bw.write(sb.toString());
@@ -42,12 +42,12 @@ public class N과M1 {
 			return;
 		}
 		
-		for(int i=1; i<=N; i++) {
+		for(Integer i=1; i<=N; i++) {
 			if(permArr.contains(i))
 				continue;
 			permArr.add(i);
 			perm(i);
-			permArr.remove(new Integer(i));
+			permArr.remove(i);
 		}
 	}
 }
