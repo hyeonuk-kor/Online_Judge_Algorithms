@@ -1,4 +1,4 @@
-package baekjoon.N과M;
+package baekjoon.N과M1;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class N과M {
+public class N과M1 {
 	
 	static int N, M;
 	static List<Integer> permArr;
