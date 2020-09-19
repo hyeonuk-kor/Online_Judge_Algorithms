@@ -38,25 +38,12 @@ public class 연산자끼워넣기 {
 			sign+="/";
 		
 		list = new ArrayList<>();
-		calc();
+		calc(number[0], 0);
 		System.out.println(max);
 		System.out.println(min);
 	}
-	private static void calc() {
+	private static void calc(int sum, int idx) {
 		if(list.size()==N-1) {
-			int sum = number[0];
-			int idx = 0;
-			for (Integer c : list) {
-				if(sign.charAt(c)=='+') {
-					sum+=number[++idx];
-				} else if(sign.charAt(c)=='-') {
-					sum-=number[++idx];
-				} else if(sign.charAt(c)=='*') {
-					sum*=number[++idx];
-				} else if(sign.charAt(c)=='/') {
-					sum/=number[++idx];
-				}
-			}
 			if(sum>max)
 				max = sum;
 			if(sum<min)
@@ -68,7 +55,16 @@ public class 연산자끼워넣기 {
 			if(list.contains(i))
 				continue;
 			list.add(i);
-			calc();
+			
+			if(sign.charAt(i)=='+') {
+				calc(sum+number[idx+1], idx+1);
+			} else if(sign.charAt(i)=='-') {
+				calc(sum-number[idx+1], idx+1);
+			} else if(sign.charAt(i)=='*') {
+				calc(sum*number[idx+1], idx+1);
+			} else if(sign.charAt(i)=='/') {
+				calc(sum/number[idx+1], idx+1);
+			}
 			list.remove(list.size()-1);
 		}
 		
