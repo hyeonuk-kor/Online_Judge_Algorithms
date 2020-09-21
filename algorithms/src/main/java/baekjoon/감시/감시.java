@@ -259,7 +259,7 @@ public class 감시 {
 			}
 		}
 
-	} // end go
+	} // end simulation
 
 
 } // end class
