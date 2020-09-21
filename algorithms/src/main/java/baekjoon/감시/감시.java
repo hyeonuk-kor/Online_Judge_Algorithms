@@ -34,7 +34,7 @@ public class 감시 {
 		}
 		
 		int allCaseCount = (int)Math.pow(4, cameraCount);
-		int min=Integer.MAX_VALUE;
+		int min=N*M;
 		
 		for (int i = 0; i < allCaseCount ; i++) {
 			
