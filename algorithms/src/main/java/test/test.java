@@ -288,52 +288,36 @@ class AlgorithmXSolver {
 
 
 class test {
-	int SIZE, N;
-	int Grid[][];
 
-	void solve() {
+	void solve() throws IOException {
 		AlgorithmXSolver solver= new AlgorithmXSolver();
-		solver.run(Grid);
-		Grid = solver.Grid;
-	}
-
-	test() {
-		SIZE = 3;
-		N = 9;
-		Grid = new int[N][N];
-		for( int i = 0; i < N; i++ ) 
-			for( int j = 0; j < N; j++ ) 
-				Grid[i][j] = 0;
-	}
-
-	void read() throws IOException {
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		for( int i = 0; i < N; i++ ) {
+		
+		int[][] Grid = new int[9][9];
+		for( int i = 0; i < 9; i++ ) {
 			st = new StringTokenizer(br.readLine());
-			for( int j = 0; j < N; j++ ) {
+			for( int j = 0; j < 9; j++ ) {
 				Grid[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-	}
-
-	void print() throws IOException {
+		
+		solver.run(Grid);
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		for( int i = 0; i < N; i++ ) {
-			for( int j = 0; j < N; j++ ) {
-				bw.write(Grid[i][j]+" ");
+		for( int i = 0; i < 9; i++ ) {
+			for( int j = 0; j < 9; j++ ) {
+				bw.write(solver.Grid[i][j]+" ");
 			}
 			bw.write('\n');
 		}
 		bw.close();
 	}
 
+
 	public static void main(String args[]) throws IOException {
 		test s = new test();
-		s.read();
 		s.solve();
-		s.print();
 	}
-
 
 }
