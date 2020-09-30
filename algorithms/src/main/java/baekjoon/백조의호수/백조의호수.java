@@ -3,21 +3,22 @@ package baekjoon.백조의호수;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class 백조의호수 {
 
-	static int R, C;
-	static char[][] map;
 	public static void main(String[] args) throws Exception {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		R = Integer.parseInt(st.nextToken());
-		C = Integer.parseInt(st.nextToken());
-		map = new char[R][C];
+		int R = Integer.parseInt(st.nextToken());
+		int C = Integer.parseInt(st.nextToken());
+		char[][] map = new char[R][C];
+		boolean[][] lVisit = new boolean[R][C];
+
 		int answer = 0;
 		int[][] dir = {
 				{0,1},
@@ -26,63 +27,80 @@ public class 백조의호수 {
 				{-1,0}
 		};
 
-		int[][] L = new int[2][];
-		int lcnt = 0;
+		Queue<int[]> melt = new LinkedList<>();
+		Queue<int[]> cur_swan = new LinkedList<>();
+		Queue<int[]> next_melt = new LinkedList<>();
+		Queue<int[]> next_swan = new LinkedList<>();
+		
+		int si = 0, sj = 0;
 		for(int i=0; i<R; i++) {
 			String input = br.readLine();
 			for(int j=0; j<C; j++) {
 				map[i][j] = input.charAt(j);
-				if(map[i][j]=='L')
-					L[lcnt++] = new int[] {i,j};
+				if(map[i][j]=='L') {
+					si = i;
+					sj = j;
+					melt.add(new int[] {i,j});
+				} else if(map[i][j]=='.') {
+					melt.add(new int[] {i,j});
+				}
 			}
 		}
-		Queue<int[]> q = new LinkedList<>();
-
-		loop:while(true) {
-
-			boolean[][] lVisit = new boolean[R][C];
-			lVisit[L[0][0]][L[0][1]] = true;
-			q.add(new int[] {L[0][0], L[0][1]});
-			
-			while(!q.isEmpty()) {
-				int[] temp = q.poll();
+		
+		cur_swan.add(new int[] {si, sj});
+		lVisit[si][sj]=true;
+		loop:while(true) {				
+			while(!cur_swan.isEmpty()) {
+				int[] temp = cur_swan.poll();
 				for(int k=0; k<dir.length; k++) {
-					lVisit[temp[0]][temp[1]] = true;
 					int ni = temp[0]+dir[k][0];
 					int nj = temp[1]+dir[k][1];
-					if(ni>=0 && nj>=0 && ni<R && nj<C) {
-						if(ni==L[1][0] && nj==L[1][1])
+					if(ni>=0 && nj>=0 && ni<R && nj<C && !lVisit[ni][nj]) {
+						if(map[ni][nj]=='.') {
+							cur_swan.add(new int[] {ni, nj});
+						}
+						if(map[ni][nj]=='X') {
+							next_swan.add(new int[] {ni, nj});
+						}
+						if(map[ni][nj]=='L') {
 							break loop;
-						else if(map[ni][nj]=='.' && !lVisit[ni][nj]) {
-							q.add(new int[] {ni, nj});
+						}
+						lVisit[ni][nj]=true;
+					}
+				}
+			}
+	
+			while(!next_swan.isEmpty()) {
+				cur_swan.add(next_swan.poll());
+			}
+			
+			while(!melt.isEmpty()) {
+				int[] temp = melt.poll();
+				int i = temp[0];
+				int j = temp[1];
+				for(int k=0; k<dir.length; k++) {
+					int ni = i + dir[k][0];
+					int nj = j + dir[k][1];
+					if(ni>=0 && nj>=0 && ni<R && nj<C) {
+						if(map[ni][nj]=='X') {
+							next_melt.add(new int[] {ni, nj});
+							map[ni][nj]='.';
 						}
 					}
 				}
 			}
-
-			for(int i=0; i<R; i++) {
-				for(int j=0; j<C; j++) {
-					for(int k=0; k<dir.length; k++) {
-						int ni = i+dir[k][0];
-						int nj = j+dir[k][1];
-						if(ni>=0 && nj>=0 && ni<R && nj<C) {
-							if(map[i][j]=='.' && (map[ni][nj]=='X'||map[ni][nj]=='L'))
-								q.add(new int[] {ni, nj});
-						}
-					}
-				}
-			} // 녹는 부분 계산
-
-			while(!q.isEmpty()) {
-				int[] t = q.poll();
-				map[t[0]][t[1]]='.';
+			
+			while(!next_melt.isEmpty()) {
+				melt.add(next_melt.poll());
 			}
+			// 녹는 부분 계산
 
 			answer++;
+			
+		}//simulation
 
-		} 
-		//simulation
 		System.out.println(answer);
-	} //main
-
+		
+	}  //main
+	
 } //class
