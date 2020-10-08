@@ -72,6 +72,7 @@ public class Main {
 			
 			if(ci==N-1 && cj==M-1) {
 				answer = block;
+				break;
 			}
 			
 			for (int i = 0; i < dir.length; i++) {
