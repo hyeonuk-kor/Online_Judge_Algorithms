@@ -82,7 +82,6 @@ public class Main {
 			}
 		}
 		
-		System.out.println(Arrays.toString(parent));
 		Stack<Integer> stack = new Stack<>();
         int cur = end;
         int cityCnt=0;
