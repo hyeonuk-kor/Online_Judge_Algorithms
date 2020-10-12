@@ -3,9 +3,6 @@ package baekjoon.N과M6;
 import java.io.*;
 import java.util.*;
 
-import java.io.*;
-import java.util.*;
-
 public class Main {
 	static int N, M, number[];
 	static ArrayList<Integer> array;
@@ -47,8 +44,8 @@ public class Main {
 		
 		for(int i=idx; i<N; i++) {
 			if(array.contains(number[i])) continue;
-			array.add(number[i]);
-			getNumber(idx+1, index+1);
+			array.add(index, number[i]);
+			getNumber(i+1, index+1);
 			array.remove(index);
 		}
 	}
