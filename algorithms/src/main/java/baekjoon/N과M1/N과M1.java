@@ -21,9 +21,9 @@ public class N과M1 {
 		set = new LinkedHashSet<ArrayList<Integer>>();
 		getNumber(0);
 		
-		for(ArrayList<Integer> arrays: set) {
-			for(int i=0; i<arrays.size(); i++) {
-				bw.write(arrays.get(i)+" ");
+		for(ArrayList<Integer> arr: set) {
+			for(int i=0; i<arr.size(); i++) {
+				bw.write(arr.get(i)+" ");
 			}
 			bw.write('\n');
 		}

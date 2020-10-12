@@ -6,7 +6,7 @@ import java.util.*;
 public class N과M2 {
 
 	static int N, M;
-	static ArrayList<Integer> combArr;
+	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
 	public static void main(String[] args) throws Exception{
@@ -17,16 +17,31 @@ public class N과M2 {
 		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		combArr = new ArrayList<>();
-
+		array = new ArrayList<>();
+		set = new LinkedHashSet<ArrayList<Integer>>();
+		getNumber(1, 0);
+		
+		for(ArrayList<Integer> arr: set) {
+			for(int i=0; i<arr.size(); i++) {
+				bw.write(arr.get(i)+" ");
+			}
+			bw.write('\n');
+		}
+		bw.close();
+		
 	}
 
-	private static void comb(int number) {
-		for(Integer i=number+1; i<=N; i++) {
-			if(combArr.contains(i))	continue;
-			combArr.add(i);
-			comb(i);
-			combArr.remove(i);
+	static void getNumber(int number, int cnt) {
+		if(cnt==M) {
+			set.add(new ArrayList<>(array));
+			return;
+		}
+		
+		for(Integer i=number; i<=N; i++) {
+			if(array.contains(i)) continue;
+			array.add(i);
+			getNumber(i+1, cnt+1);
+			array.remove(cnt);
 		}
 	}
 
