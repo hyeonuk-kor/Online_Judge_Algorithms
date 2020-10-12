@@ -4,45 +4,48 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
-	static int N, M, arr[], answer[];
-	static boolean[] check;
-	static StringBuilder sb;
-	public static void main(String[] args) throws Exception {
-		
+	static int N, M, number[];
+	static ArrayList<Integer> array;
+	static LinkedHashSet<ArrayList<Integer>> set;
+	
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-	
-		arr = new int[N];
+		array = new ArrayList<>();
+		set = new LinkedHashSet<ArrayList<Integer>>();
+		
+		number = new int[N];
 		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < number.length; i++) {
+			number[i] = Integer.parseInt(st.nextToken());
 		}
+		Arrays.sort(number);
 		
-		Arrays.sort(arr);
+		getNumber(0, 0);
 		
-		sb = new StringBuilder();
-		answer = new int[M];
-		rePerm(0, 0);
-		System.out.println(sb);
+		for(ArrayList<Integer> arr: set) {
+			for(int i=0; i<arr.size(); i++) {
+				bw.write(arr.get(i)+" ");
+			}
+			bw.write('\n');
+		}
+		bw.close();
 	}
 
-	static void rePerm(int idx, int cnt) {
-		if(cnt==M) {
-			for (int i = 0; i < answer.length; i++)
-				sb.append(answer[i]).append(' ');
-			sb.append('\n');
+	static void getNumber(int idx, int index) {
+		if(index==M) {
+			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for (int i = 0; i < N; i++) {
-			answer[cnt] = arr[i];
-			rePerm(i, cnt+1);
+		for(int i=0; i<N; i++) {
+			array.add(index, number[i]);
+			getNumber(i+1, index+1);
+			array.remove(index);
 		}
-		
 	}
-	
 }
