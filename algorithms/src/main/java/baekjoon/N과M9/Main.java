@@ -1,61 +1,56 @@
 package baekjoon.N과M9;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	
 	static int N, M, number[];
 	static boolean[] check;
-	static ArrayList<Integer> answer;
-	static Set<ArrayList<Integer>> set;
-	static StringBuilder sb;
-	public static void main(String[] args) throws Exception {
-		
+	static ArrayList<Integer> array;
+	static LinkedHashSet<ArrayList<Integer>> set;
+	
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		sb = new StringBuilder();
 		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		number = new int[N];
-		check = new boolean[N];
-		answer = new ArrayList<>();
+		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
 		
+		number = new int[N];
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < number.length; i++) {
-			number[i]=Integer.parseInt(st.nextToken());
+			number[i] = Integer.parseInt(st.nextToken());
 		}
 		Arrays.sort(number);
 		
-		dfs(0);
+		check = new boolean[N];
+		getNumber(0);
 		
 		for(ArrayList<Integer> arr: set) {
-			for (int i = 0; i < arr.size(); i++) {
+			for(int i=0; i<arr.size(); i++) {
 				bw.write(arr.get(i)+" ");
 			}
 			bw.write('\n');
 		}
 		bw.close();
-		
 	}
-	
-	static void dfs(int cnt) {
-		if(cnt==M) {
-			set.add(new ArrayList<>(answer));
+
+	static void getNumber(int index) {
+		if(index==M) {
+			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for (int i = 0; i < number.length; i++) {
+		for(int i=0; i<N; i++) {
 			if(check[i]) continue;
 			check[i] = true;
-			answer.add(number[i]);
-			dfs(cnt+1);
-			answer.remove(cnt);
+			array.add(number[i]);
+			getNumber(index+1);
+			array.remove(index);
 			check[i] = false;
 		}
 	}
-	
 }
