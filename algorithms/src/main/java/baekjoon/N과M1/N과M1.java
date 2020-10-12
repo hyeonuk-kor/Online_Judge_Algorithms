@@ -1,18 +1,13 @@
 package baekjoon.N과M1;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class N과M1 {
 	
 	static int N, M;
-	static List<Integer> permArr;
-	static StringBuilder sb;
+	static ArrayList<Integer> permArr;
+	static LinkedHashSet<ArrayList<Integer>> set;
 	public static void main(String[] args) throws Exception {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,32 +17,30 @@ public class N과M1 {
 		N = Integer.parseInt(st.nextToken()); 
 		M = Integer.parseInt(st.nextToken());
 		
-		sb = new StringBuilder();
 		permArr = new ArrayList<>();
-		for(Integer i=1; i<=N; i++) {
-			permArr.add(i);
-			perm(i);
-			permArr.remove(i);
-		}
+		set = new LinkedHashSet<ArrayList<Integer>>();
+		perm(0);
 		
-		bw.write(sb.toString());
-		bw.close();
-	}
-	private static void perm(int number) {
-		if(permArr.size()==M) {
-			for (Integer i : permArr) {
-				sb.append(i).append(' ');
+		for(ArrayList<Integer> arrays: set) {
+			for(int i=0; i<arrays.size(); i++) {
+				bw.write(arrays.get(i)+" ");
 			}
-			sb.append('\n');
-			return;
+			bw.write('\n');
+		}
+		bw.close();
+		
+	}
+	private static void perm(int cnt) {
+		if(cnt==M) {
+			set.add(new ArrayList<>(permArr));
 		}
 		
 		for(Integer i=1; i<=N; i++) {
-			if(permArr.contains(i))
-				continue;
+			if(permArr.contains(i)) continue;
 			permArr.add(i);
-			perm(i);
-			permArr.remove(i);
+			perm(cnt+1);
+			permArr.remove(cnt);
 		}
+		
 	}
 }
