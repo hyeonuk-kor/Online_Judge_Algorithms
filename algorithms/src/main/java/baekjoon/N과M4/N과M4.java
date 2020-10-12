@@ -1,47 +1,44 @@
 package baekjoon.N과M4;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class N과M4 {
-	
 	static int N, M;
-	static ArrayList<Integer> seqArr;
-	static StringBuilder sb;
+	static ArrayList<Integer> array;
+	static LinkedHashSet<ArrayList<Integer>> set;
 	
-	public static void main(String[] args) throws Exception {
-		String input = new BufferedReader(new InputStreamReader(System.in)).readLine();
-		StringTokenizer st = new StringTokenizer(input);
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		seqArr = new ArrayList<>();
-		sb = new StringBuilder();
+		array = new ArrayList<>();
+		set = new LinkedHashSet<ArrayList<Integer>>();
 		
-		getSeq(1);
+		getNumber(1,0);
 		
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		bw.write(sb.toString());
+		for(ArrayList<Integer> arr: set) {
+			for(int i=0; i<arr.size(); i++) {
+				bw.write(arr.get(i)+" ");
+			}
+			bw.write('\n');
+		}
 		bw.close();
 	}
-	
-	private static void getSeq(Integer number) {
-		if(seqArr.size()==M) {
-			for (Integer integer : seqArr) {
-				sb.append(integer).append(' ');
-			}
-			sb.append('\n');
+
+	static void getNumber(int number, int index) {
+		if(index==M) {
+			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(Integer i=number; i<=N; i++) {
-			seqArr.add(i);
-			getSeq(i);
-			seqArr.remove(seqArr.size()-1);
+		for(int i=number; i<=N; i++) {
+			array.add(i);
+			getNumber(i, index+1);
+			array.remove(index);
 		}
 	}
-	
 }

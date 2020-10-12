@@ -10,7 +10,6 @@ public class N과M2 {
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
 	public static void main(String[] args) throws Exception{
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -19,6 +18,7 @@ public class N과M2 {
 		M = Integer.parseInt(st.nextToken());
 		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
+		
 		getNumber(1, 0);
 		
 		for(ArrayList<Integer> arr: set) {
@@ -28,20 +28,19 @@ public class N과M2 {
 			bw.write('\n');
 		}
 		bw.close();
-		
 	}
 
-	static void getNumber(int number, int cnt) {
-		if(cnt==M) {
+	static void getNumber(int number, int index) {
+		if(index==M) {
 			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(Integer i=number; i<=N; i++) {
+		for(int i=number; i<=N; i++) {
 			if(array.contains(i)) continue;
 			array.add(i);
-			getNumber(i+1, cnt+1);
-			array.remove(cnt);
+			getNumber(i+1, index+1);
+			array.remove(index);
 		}
 	}
 

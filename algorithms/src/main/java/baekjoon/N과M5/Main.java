@@ -4,48 +4,49 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+	static int N, M, number[];
+	static ArrayList<Integer> array;
+	static LinkedHashSet<ArrayList<Integer>> set;
 	
-	static int N, M, answer[], arr[];
-	static boolean check[];
-	static StringBuilder sb;
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
+		array = new ArrayList<>();
+		set = new LinkedHashSet<ArrayList<Integer>>();
 		
-		arr = new int[N];
-		check = new boolean[N];
+		number = new int[N];
 		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < arr.length; i++) {
-			arr[i]=Integer.parseInt(st.nextToken());
+		for (int i = 0; i < number.length; i++) {
+			number[i] = Integer.parseInt(st.nextToken());
 		}
+		Arrays.sort(number);
 		
-		sb = new StringBuilder();
-		answer = new int[M];
-		Arrays.sort(arr);
-		dfs(0);
-		System.out.println(sb.toString());
+		getNumber(0);
 		
+		for(ArrayList<Integer> arr: set) {
+			for(int i=0; i<arr.size(); i++) {
+				bw.write(arr.get(i)+" ");
+			}
+			bw.write('\n');
+		}
+		bw.close();
 	}
 
-	private static void dfs(int cnt) {
-		if(cnt==M) {
-			for (int i = 0; i < answer.length; i++) {
-				sb.append(answer[i]+" ");
-			}
-			sb.append('\n');
+	static void getNumber(int index) {
+		if(index==M) {
+			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for (int i = 0; i < arr.length; i++) {
-			if(check[i]) continue;
-			check[i] = true;
-			answer[cnt] = arr[i];
-			dfs(cnt+1);
-			check[i]=false;
+		for(int i=0; i<N; i++) {
+			if(array.contains(number[i])) continue;
+			array.add(number[i]);
+			getNumber(index+1);
+			array.remove(index);
 		}
 	}
-	
 }
