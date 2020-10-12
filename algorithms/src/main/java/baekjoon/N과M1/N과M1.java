@@ -6,7 +6,7 @@ import java.io.*;
 public class N과M1 {
 	
 	static int N, M;
-	static ArrayList<Integer> permArr;
+	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	public static void main(String[] args) throws Exception {
 		
@@ -17,7 +17,7 @@ public class N과M1 {
 		N = Integer.parseInt(st.nextToken()); 
 		M = Integer.parseInt(st.nextToken());
 		
-		permArr = new ArrayList<>();
+		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
 		perm(0);
 		
@@ -32,14 +32,14 @@ public class N과M1 {
 	}
 	private static void perm(int cnt) {
 		if(cnt==M) {
-			set.add(new ArrayList<>(permArr));
+			set.add(new ArrayList<>(array));
 		}
 		
 		for(Integer i=1; i<=N; i++) {
-			if(permArr.contains(i)) continue;
-			permArr.add(i);
+			if(array.contains(i)) continue;
+			array.add(i);
 			perm(cnt+1);
-			permArr.remove(cnt);
+			array.remove(cnt);
 		}
 		
 	}
