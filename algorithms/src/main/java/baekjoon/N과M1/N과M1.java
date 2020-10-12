@@ -19,7 +19,7 @@ public class N과M1 {
 		
 		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
-		perm(0);
+		getNumber(0);
 		
 		for(ArrayList<Integer> arrays: set) {
 			for(int i=0; i<arrays.size(); i++) {
@@ -30,7 +30,7 @@ public class N과M1 {
 		bw.close();
 		
 	}
-	private static void perm(int cnt) {
+	private static void getNumber(int cnt) {
 		if(cnt==M) {
 			set.add(new ArrayList<>(array));
 		}
@@ -38,7 +38,7 @@ public class N과M1 {
 		for(Integer i=1; i<=N; i++) {
 			if(array.contains(i)) continue;
 			array.add(i);
-			perm(cnt+1);
+			getNumber(cnt+1);
 			array.remove(cnt);
 		}
 		
