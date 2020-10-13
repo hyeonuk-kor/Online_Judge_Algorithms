@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Main {
 	static int N, M, number[];
-	static boolean[] check;
 	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
@@ -26,7 +25,6 @@ public class Main {
 		}
 		Arrays.sort(number);
 		
-		check = new boolean[N];
 		getNumber(0);
 		
 		for(ArrayList<Integer> arr: set) {
