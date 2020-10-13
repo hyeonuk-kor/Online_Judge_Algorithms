@@ -11,7 +11,7 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception{
 		input();
-		getNumber(0, 0);
+		getNumber();
 		print();
 		
 	}
@@ -43,16 +43,15 @@ public class Main {
 		Arrays.sort(number);
 	}
 
-	static void getNumber(int idx, int index) {
-		if(index==M) {
-			set.add(new ArrayList<>(array));
-			return;
-		}
+	static void getNumber() {
 		
-		for(int i=idx; i<N; i++) {
-			array.add(number[i]);
-			getNumber(i, index+1);
-			array.remove(index);
+	/* 종료 조건 설정
+		if(~~)
+		for(N중 for 문을 위한 반복문) {
+			array.add(값추가); or array.add(인덱스, 값추가);
+			getNumber(); 각 인덱스 별 함수 호출
+			array.remove(인덱스를 통한 제거);
 		}
+	*/
 	}
 }
