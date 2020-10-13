@@ -1,29 +1,23 @@
-package baekjoon.N과M7;
+package baekjoon.N과M.N과M_01;
 
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-	static int N, M, number[];
+	
+	static int N, M;
 	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		N = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken()); 
 		M = Integer.parseInt(st.nextToken());
 		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
-		
-		number = new int[N];
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < number.length; i++) {
-			number[i] = Integer.parseInt(st.nextToken());
-		}
-		Arrays.sort(number);
 		
 		getNumber(0);
 		
@@ -35,17 +29,17 @@ public class Main {
 		}
 		bw.close();
 	}
-
-	static void getNumber(int index) {
-		if(index==M) {
+	
+	private static void getNumber(int index) {
+		if(index==M) 
 			set.add(new ArrayList<>(array));
-			return;
-		}
 		
-		for(int i=0; i<N; i++) {
-			array.add(index, number[i]);
+		for(int i=1; i<=N; i++) {
+			if(array.contains(i)) continue;
+			array.add(i);
 			getNumber(index+1);
 			array.remove(index);
 		}
+		
 	}
 }

@@ -1,10 +1,11 @@
-package baekjoon.N과M11;
+package baekjoon.N과M.N과M_10;
 
 import java.io.*;
 import java.util.*;
 
 public class Main {
 	static int N, M, number[];
+	static boolean[] check;
 	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
@@ -25,7 +26,8 @@ public class Main {
 		}
 		Arrays.sort(number);
 		
-		getNumber(0);
+		check = new boolean[N];
+		getNumber(0, 0);
 		
 		for(ArrayList<Integer> arr: set) {
 			for(int i=0; i<arr.size(); i++) {
@@ -36,16 +38,19 @@ public class Main {
 		bw.close();
 	}
 
-	static void getNumber(int index) {
+	static void getNumber(int idx, int index) {
 		if(index==M) {
 			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(int i=0; i<N; i++) {
+		for(int i=idx; i<N; i++) {
+			if(check[i]) continue;
+			check[i] = true;
 			array.add(number[i]);
-			getNumber(index+1);
+			getNumber(i+1, index+1);
 			array.remove(index);
+			check[i] = false;
 		}
 	}
 }

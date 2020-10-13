@@ -1,4 +1,4 @@
-package baekjoon.N과M6;
+package baekjoon.N과M.N과M_11;
 
 import java.io.*;
 import java.util.*;
@@ -25,7 +25,7 @@ public class Main {
 		}
 		Arrays.sort(number);
 		
-		getNumber(0, 0);
+		getNumber(0);
 		
 		for(ArrayList<Integer> arr: set) {
 			for(int i=0; i<arr.size(); i++) {
@@ -36,18 +36,16 @@ public class Main {
 		bw.close();
 	}
 
-	static void getNumber(int idx, int index) {
+	static void getNumber(int index) {
 		if(index==M) {
 			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(int i=idx; i<N; i++) {
-			if(array.contains(number[i])) continue;
-			array.add(index, number[i]);
-			getNumber(i+1, index+1);
+		for(int i=0; i<N; i++) {
+			array.add(number[i]);
+			getNumber(index+1);
 			array.remove(index);
 		}
 	}
 }
-

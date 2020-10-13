@@ -1,10 +1,14 @@
-package baekjoon.N과M2;
+package baekjoon.N과M.N과M_03;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.StringTokenizer;
 
-public class N과M2 {
-
+public class Main {
 	static int N, M;
 	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
@@ -19,7 +23,7 @@ public class N과M2 {
 		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
 		
-		getNumber(1, 0);
+		getNumber(0);
 		
 		for(ArrayList<Integer> arr: set) {
 			for(int i=0; i<arr.size(); i++) {
@@ -30,18 +34,16 @@ public class N과M2 {
 		bw.close();
 	}
 
-	static void getNumber(int number, int index) {
+	static void getNumber(int index) {
 		if(index==M) {
 			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(int i=number; i<=N; i++) {
-			if(array.contains(i)) continue;
+		for(int i=1; i<=N; i++) {
 			array.add(i);
-			getNumber(i+1, index+1);
+			getNumber(index+1);
 			array.remove(index);
 		}
 	}
-
 }

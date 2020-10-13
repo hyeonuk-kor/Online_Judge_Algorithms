@@ -1,10 +1,11 @@
-package baekjoon.N과M8;
+package baekjoon.N과M.N과M_02;
 
 import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int N, M, number[];
+
+	static int N, M;
 	static ArrayList<Integer> array;
 	static LinkedHashSet<ArrayList<Integer>> set;
 	
@@ -18,14 +19,7 @@ public class Main {
 		array = new ArrayList<>();
 		set = new LinkedHashSet<ArrayList<Integer>>();
 		
-		number = new int[N];
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < number.length; i++) {
-			number[i] = Integer.parseInt(st.nextToken());
-		}
-		Arrays.sort(number);
-		
-		getNumber(0, 0);
+		getNumber(1, 0);
 		
 		for(ArrayList<Integer> arr: set) {
 			for(int i=0; i<arr.size(); i++) {
@@ -36,16 +30,18 @@ public class Main {
 		bw.close();
 	}
 
-	static void getNumber(int idx, int index) {
+	static void getNumber(int number, int index) {
 		if(index==M) {
 			set.add(new ArrayList<>(array));
 			return;
 		}
 		
-		for(int i=idx; i<N; i++) {
-			array.add(index, number[i]);
-			getNumber(i, index+1);
+		for(int i=number; i<=N; i++) {
+			if(array.contains(i)) continue;
+			array.add(i);
+			getNumber(i+1, index+1);
 			array.remove(index);
 		}
 	}
+
 }
