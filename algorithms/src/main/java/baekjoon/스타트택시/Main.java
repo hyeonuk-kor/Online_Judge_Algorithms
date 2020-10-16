@@ -71,7 +71,9 @@ public class Main {
 					for (int i = 0; i < dir.length; i++) {
 						int ni = mi + dir[i][0];
 						int nj = mj + dir[i][1];
-						if(ni<0 || nj<0 || ni>=N || nj>=N || )
+						if(ni<0 || nj<0 || ni>=N || nj>=N) {
+							
+						}
 					}
 				}
 			}
