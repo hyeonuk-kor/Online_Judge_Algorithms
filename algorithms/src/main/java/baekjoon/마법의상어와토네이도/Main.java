@@ -2,7 +2,7 @@ package baekjoon.마법의상어와토네이도;
 import java.io.*;
 import java.util.*;
 public class Main {
-	static int N, map[][], skill[][], move[][], blowMap[][][];
+	static int N, map[][], skill[][], move[][], blowMap[][][], answer;
 	static final int WEST=0, SOUTH=1, EAST=2, NORTH=3;
 	static final int BLANK = -999, ALPHA = -111;
 	public static void main(String[] args) throws Exception {
@@ -10,14 +10,7 @@ public class Main {
 		blowingInit();
 		sharkInfoInit();
 		simulate();
-		int sum = 0;
-		for(int i=0; i<map.length; i++) {
-			for(int j=0; j<map.length; j++) {
-				if(i<2 || i>=N+2 || j<2 || j>=N+2)
-					sum+=map[i][j];
-			}
-		}
-		System.out.println(sum);
+		System.out.println(answer);
 	}
 
 	static void simulate() {
@@ -29,10 +22,9 @@ public class Main {
 			int[] info = q.poll();
 			int si = info[0];
 			int sj = info[1];
-			if(si==0 && sj==0)
-				break;
+			if(si==0 && sj==0) break;
 			int snum = info[2];
-			calcAnswer(si+2, sj+2, skill[si][sj]);
+			useTornado(si+2, sj+2, skill[si][sj]);
 			for(int i=0; i<4; i++) {
 				int ni = si + di[i];
 				int nj = sj + dj[i];
@@ -43,9 +35,15 @@ public class Main {
 				}
 			}
 		}
+		for(int i=0; i<map.length; i++) {
+			for(int j=0; j<map.length; j++) {
+				if(i<2 || i>=N+2 || j<2 || j>=N+2)
+					answer+=map[i][j];
+			}
+		}
 	}
 
-	static void calcAnswer(int y, int x, int dir) {
+	static void useTornado(int y, int x, int dir) {
 		int bi = 0, bj = 0;
 		int curMount = 0;
 		
@@ -58,6 +56,7 @@ public class Main {
 		} else {
 			curMount = map[y-1][x]; bi = y-3; bj = x-2;
 		}
+		
 		int sum = 0, ai = ALPHA, aj = ALPHA;
 		for(int i=bi, ii=0; i<bi+5; i++, ii++) {
 			for(int j=bj, jj=0; j<bj+5; j++, jj++) {
@@ -73,6 +72,7 @@ public class Main {
 				map[i][j] += (curMount * percent / 100);
 			}
 		}
+		
 		if(ai!=ALPHA && aj!=ALPHA) {
 			map[ai][aj] += curMount - sum;
 		}
