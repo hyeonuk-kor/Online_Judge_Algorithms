@@ -35,8 +35,8 @@ public class Main {
 				}
 			}
 		}
-		for(int i=0; i< N; i++) {
-			for(int j=0; j< N; j++) {
+		for(int i=0; i<map.length; i++) {
+			for(int j=0; j<map.length; j++) {
 				if(i<2 || i>=N+2 || j<2 || j>=N+2)
 					answer+=map[i][j];
 			}
