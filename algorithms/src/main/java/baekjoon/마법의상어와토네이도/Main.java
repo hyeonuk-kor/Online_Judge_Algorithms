@@ -12,7 +12,6 @@ public class Main {
 		simulate();
 		System.out.println(answer);
 	}
-
 	static void simulate() {
 		Queue<int[]> q = new ArrayDeque<>();
 		int[] di = {0,0,1,-1};
@@ -42,11 +41,9 @@ public class Main {
 			}
 		}
 	}
-
 	static void useTornado(int y, int x, int dir) {
 		int bi = 0, bj = 0;
 		int curMount = 0;
-		
 		if(dir==0) {
 			curMount = map[y][x-1]; bi = y-2; bj = x-3;
 		} else if(dir==1) {
@@ -56,7 +53,6 @@ public class Main {
 		} else {
 			curMount = map[y-1][x]; bi = y-3; bj = x-2;
 		}
-		
 		int sum = 0, ai = ALPHA, aj = ALPHA;
 		for(int i=bi, ii=0; i<bi+5; i++, ii++) {
 			for(int j=bj, jj=0; j<bj+5; j++, jj++) {
@@ -67,23 +63,18 @@ public class Main {
 					ai = i; aj = j;
 					continue;
 				}
-					
 				sum += (curMount * percent / 100);
 				map[i][j] += (curMount * percent / 100);
 			}
 		}
-		
-		if(ai!=ALPHA && aj!=ALPHA) {
+		if(ai!=ALPHA && aj!=ALPHA) 
 			map[ai][aj] += curMount - sum;
-		}
 		
 		if(dir==0) map[y][x-1] = 0;
 		else if(dir==1) map[y+1][x] = 0;
 		else if(dir==2) map[y][x+1] = 0;
 		else map[y-1][x] = 0;
-		
 	}
-
 	static void sharkInfoInit() {
 		int cnt = N*N;
 		skill = new int[N][N];
@@ -115,7 +106,6 @@ public class Main {
 			rowIndex++;	colIndex++;
 		}
 	}
-
 	static void blowingInit() {
 		blowMap = new int[4][][];
 		blowMap[0] = new int[][] {
@@ -125,7 +115,6 @@ public class Main {
 			{BLANK,  10,   7,   1,   BLANK},
 			{BLANK, BLANK, 2, BLANK, BLANK}
 		};
-		//90도 회전시키면서 바람방향 정의
 		for(int dir=1; dir<4; dir++) {
 			blowMap[dir] = new int[5][5];
 			for(int i=0; i<5; i++) {
@@ -135,7 +124,6 @@ public class Main {
 			}
 		}
 	}
-
 	static void input() throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -148,5 +136,4 @@ public class Main {
 			}
 		}
 	} // end input
-
 }
