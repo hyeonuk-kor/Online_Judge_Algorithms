@@ -1,11 +1,10 @@
 package baekjoon.피보나치함수;
-import java.util.*;
 import java.io.*;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
-		int[] memo = new int[40];
+		int[] memo = new int[41];
 		memo[0] = 0;
 		memo[1] = 1;
 		for(int i=2; i<memo.length; i++) {
