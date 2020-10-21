@@ -1,23 +1,24 @@
 package baekjoon.숫자의신;
 import java.util.*;
+import java.io.*;
 public class Main {
-	static int K, N;
-	static String number[];
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(System.in);
-		K = sc.nextInt();
-		N = sc.nextInt();
-		number = new String[N];
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+		int K = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken());
+		String[] number = new String[N];
 		
-		int max = Integer.MIN_VALUE;
+		int max = (int)-1e9;
 		for(int i=0; i<K; i++) {
-			number[i] = sc.next();
+			number[i] = br.readLine();
 			if(Integer.parseInt(number[i])>max) 
 				max = Integer.parseInt(number[i]);
 		}
 		
 		for(int i=K; i<N; i++)
-			number[i] = max+"";
+			number[i] = Integer.toString(max);
 		
 		Arrays.sort(number, new Comparator<String>() {
 			@Override
@@ -26,9 +27,12 @@ public class Main {
 			}
 		});
 		
+		StringBuilder sb = new StringBuilder();
 		for(String i: number)
-			System.out.print(i);
-		System.out.println();
+			sb.append(i);
+		bw.write(sb.toString());
+		bw.flush();
+		bw.close();
 		
 	}
 }
