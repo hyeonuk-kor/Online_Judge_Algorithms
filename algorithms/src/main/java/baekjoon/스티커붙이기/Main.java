@@ -65,7 +65,6 @@ public class Main {
 			}
 		}
 	}
-
 	static int[][] deepCopy(int[][] temp) {
 		int[][] copyMap = new int[temp.length][];
 		for(int i=0; i<temp.length; i++) {
@@ -90,9 +89,6 @@ public class Main {
 			int r = Integer.parseInt(st.nextToken());
 			int c = Integer.parseInt(st.nextToken());
 			sticker[i][0] = new int[r][c];
-			sticker[i][1] = new int[c][r];
-			sticker[i][2] = new int[r][c];
-			sticker[i][3] = new int[c][r];
 			for(int j=0; j<r; j++) {
 				st = new StringTokenizer(br.readLine());
 				for(int k=0; k<c; k++) {
