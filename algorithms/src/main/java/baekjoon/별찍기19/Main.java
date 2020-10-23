@@ -19,7 +19,7 @@ public class Main {
 			return;
 		
 		for(int i=0; i<size; i++) {
-			if(i==0 || i==y-1)
+			if(i==0 || i==y-1) {}
 		}
 	}
 

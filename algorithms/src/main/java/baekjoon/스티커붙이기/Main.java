@@ -11,16 +11,35 @@ public class Main {
 		System.out.println(answer);
 	}
 	static void simulate() {
-		stickerInit();
-		for(int i=0; i<K; i++) { 
+		loop:for(int i=0; i<K; i++) { 
 			for(int j=0; j<4; j++) {
-				System.out.println(i+" "+j);
-				if(isAttahced(i,j)) {
-					break; // 다음 스티커 붙이기
+				int r = sticker[i][j].length;
+				int c = sticker[i][j][0].length;
+				for(int k=0; k<N-r+1; k++) {
+					for(int l=0; l<M-c+1; l++) {
+						if(isAttahced(k,l,r,c,sticker[i][j])) {
+							continue loop;
+						}
+					}
 				}
 			}
 		}
 		getSum(); // 합계 구하기
+	}
+	static boolean isAttahced(int y, int x, int ny, int nx, int[][] sticky) {
+		int[][] check = deepCopy(notebook);
+		for(int i=y,si=0; i<y+ny; i++,si++) {
+			for(int j=x,sj=0; j<x+nx; j++,sj++) {
+				if(check[i][j]==1 && sticky[si][sj]==1)
+					return false;
+				else {
+					if(check[i][j]==0 && sticky[si][sj]==1)
+						check[i][j] = sticky[si][sj];
+				}
+			}
+		}
+		notebook = deepCopy(check);
+		return true;
 	}
 	private static void stickerInit() {
 		for(int i=0; i<K; i++) {
@@ -40,20 +59,11 @@ public class Main {
 	static void getSum() {
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<M; j++) {
-				if(notebook[i][j]!=0) {
+				if(notebook[i][j]==1) {
 					answer++;
 				}
 			}
 		}
-	}
-	static boolean isAttahced(int n, int dir) {
-		int temp[][] = deepCopy(notebook);
-		for(int i=0; i<N; i++) {
-			for(int j=0; j<M; j++) {
-				
-			}
-		}
-		return false;
 	}
 
 	static int[][] deepCopy(int[][] temp) {
