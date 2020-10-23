@@ -41,7 +41,7 @@ public class Main {
 		notebook = deepCopy(check);
 		return true;
 	}
-	private static void stickerInit() {
+	static void stickerInit() {
 		for(int i=0; i<K; i++) {
 			for(int j=1; j<4; j++) {
 				int y = sticker[i][j-1].length;
