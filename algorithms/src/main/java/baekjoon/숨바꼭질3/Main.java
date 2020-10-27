@@ -8,14 +8,14 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		int N = Integer.parseInt(st.nextToken());
 		int K = Integer.parseInt(st.nextToken());
-		boolean[] visit = new boolean[100001];
-		Queue<int[]> q = new ArrayDeque<>();
+		boolean[] visit = new boolean[200001];
+		Deque<int[]> q = new ArrayDeque<>();
 		q.add(new int[] {N, 0});
-		visit[N] = true;
 		while(!q.isEmpty()) {
 			int[] info = q.poll();
 			int cn = info[0];
 			int cc = info[1];
+			visit[cn] = true;
 			if(cn==K) {
 				bw.append(cc+"\n");
 				break;
@@ -34,12 +34,12 @@ public class Main {
 					break;
 				}
 				if(np<0 || np>100000 || visit[np]) continue;
-				if(i<2)
-					q.add(new int[] {np, cc+1});
+				if(i==0)
+					q.addFirst(new int[] {np, cc});
 				else
-					q.add(new int[] {np, cc});
-				visit[np]=true;
+					q.addLast(new int[] {np, cc+1});
 			}
+			
 		}
 		bw.flush();
 		bw.close();
