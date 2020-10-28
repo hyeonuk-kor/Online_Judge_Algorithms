@@ -7,15 +7,17 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st;
 		int N = Integer.parseInt(br.readLine());
-		ArrayList<String> arr = new ArrayList<>();
+		int[] arr = new int[N];
 		st = new StringTokenizer(br.readLine()," ");
 		for(int i=0; i<N; i++) {
-			arr.add(st.nextToken());
+			arr[i] = Integer.parseInt(st.nextToken());
 		}
+		Arrays.parallelSort(arr);
+		
 		int M = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine()," ");
 		for(int i=0; i<M; i++) {
-			if(arr.contains(st.nextToken()))
+			if(Arrays.binarySearch(arr, Integer.parseInt(st.nextToken()))>=0)
 				bw.append(1+"\n");
 			else
 				bw.append(0+"\n");
