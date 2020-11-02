@@ -367,6 +367,7 @@ python/.idea/workspace.xml
 *.exp
 
 # Precompiled Headers
+*.gch
 *.pch
 
 # Libraries
