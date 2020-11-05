@@ -3,22 +3,17 @@
 #include <stdlib.h>
 
 char* sum(char* a, char* b);
-char res[1000];
+char res[9000000000];
 char* t[101];
-char a[101], b[101];
+char a[300001], b[300001];
 int main() {
-
-	//Please Enter Your Code Here
-
-
 
 	int i, j, k;
 	int lenA, lenB;
 
-	//scanf("%s", a);
-	//scanf("%s", b);
-	a = 1e30;
-	b = 1e30;
+	scanf("%s", a);
+	scanf("%s", b);
+
 	lenA = strlen(a);
 	lenB = strlen(b);
 	for (i = 0; i <= lenB - 1; i++)
