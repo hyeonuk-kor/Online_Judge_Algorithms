@@ -21,9 +21,12 @@ public class 스타트와링크_14889 {
 		linkTeam = new int[N/2];
 		check = new boolean[N];
 		getTeam(0, 0);
-		System.out.println(min);
 	}
 	private static void getTeam(int start, int idx) {
+		if(startTeam[0]>=N/2) {
+			System.out.println(min);
+			System.exit(0);
+		}
 		if(idx==N/2) {
 			int linkTeamIdx = 0;
 			for(int i=0; i<check.length; i++) {
