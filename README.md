@@ -7,7 +7,7 @@
 #### SWExperts : https://swexpertacademy.com/main/main.do
 
 
-# Folder structure
+# Folder structures
 
 ##### src/main/java : Solution Code
 ##### src/main/test : Testcase
