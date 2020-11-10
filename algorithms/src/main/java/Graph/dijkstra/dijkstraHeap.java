@@ -1,9 +1,8 @@
 package Graph.dijkstra;
 import java.util.*;
-public class dijkstraQueue {
+public class dijkstraHeap {
 	static final int INF = (int)1e9;
 	static int n, dist[], parent[];
-	static boolean[] visit;
 	public static void main(String[] args) {
 		n = 7;
 		int[][] graph = {
@@ -33,7 +32,6 @@ public class dijkstraQueue {
 	}
 	
 	static void dijkstra(int[][] graph, int start, int end) {
-		visit = new boolean[n+1];
 		dist = new int[n+1];
 		parent = new int[n+1]; //경로 추적
 		for(int i=0; i<=n; i++) {
@@ -41,18 +39,16 @@ public class dijkstraQueue {
 			parent[i] = -1;
 		}
 		dist[start] = 0;
-		Queue<Integer> q = new LinkedList<>(); //하나씩 순서대로 검사하기 위한 큐 선언
-		q.add(start);
-		while(!q.isEmpty()) {
-			int curV = q.poll();
-			visit[curV] = true;
+		PriorityQueue<Integer> pq = new PriorityQueue<>(); //하나씩 순서대로 검사하기 위한 큐 선언
+		pq.add(start);
+		while(!pq.isEmpty()) {
+			int curV = pq.poll();
 			for(int i=1; i<=n; i++) {
-				if(visit[i]) continue;
 				if(graph[curV][i]!=0) {
 					if(dist[i] > dist[curV] + graph[curV][i]) {
 						dist[i] = dist[curV] + graph[curV][i];
 						parent[i] = curV;
-						q.add(i);
+						pq.add(i);
 					}
 				}
 			}

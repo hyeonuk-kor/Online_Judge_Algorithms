@@ -1,6 +1,6 @@
 package Graph.dijkstra;
 public class dijkstraGetMin {
-	static final int INF = (int)1e9;
+	static final int INF = (int)1e9; //최초에는 연결되지 않았다는 무한의 의미
 	static int n, dist[], parent[];
 	static boolean[] visit;
 	public static void main(String[] args) {
