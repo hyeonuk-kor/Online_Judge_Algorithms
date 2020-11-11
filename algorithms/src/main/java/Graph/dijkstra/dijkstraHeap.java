@@ -39,16 +39,28 @@ public class dijkstraHeap {
 			parent[i] = -1;
 		}
 		dist[start] = 0;
-		PriorityQueue<Integer> pq = new PriorityQueue<>(); //하나씩 순서대로 검사하기 위한 큐 선언
-		pq.add(start);
+		PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				return Integer.compare(o1[1], o2[1]);
+			}
+		}); //하나씩 순서대로 검사하기 위한 큐 선언
+		
+		pq.add(new int[] {start, 0});
 		while(!pq.isEmpty()) {
-			int curV = pq.poll();
+			int[] info = pq.poll();
+			int curV = info[0];
+			int w = info[1];
+			if(dist[curV]<w) {
+				System.out.println(curV+"는 이미 방문한 뒤 현재보다 최단거리로 갱신되었기에 다음 단계로 넘어갑니다.");
+				continue;
+			}
 			for(int i=1; i<=n; i++) {
 				if(graph[curV][i]!=0) {
 					if(dist[i] > dist[curV] + graph[curV][i]) {
 						dist[i] = dist[curV] + graph[curV][i];
 						parent[i] = curV;
-						pq.add(i);
+						pq.add(new int[] {i, dist[i]});
 					}
 				}
 			}
