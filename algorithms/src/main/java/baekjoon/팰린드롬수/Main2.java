@@ -20,6 +20,7 @@ public class Main2 {
 			ListIterator<Character> left = list.listIterator();
 
 			boolean check = true;
+			len/=2;
 			while(len-->0) {
 				if(left.next()==right.previous()) {
 					continue;
