@@ -1,8 +1,6 @@
 package baekjoon.에디터;
 import java.util.*;
 import java.io.*;
-import java.util.*;
-import java.io.*;
 public class 야메 {
 
 	public static void main(String[] args) throws Exception {
