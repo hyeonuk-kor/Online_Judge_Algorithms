@@ -6,7 +6,6 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
 		int hy=0, hx=0;
 		N = Integer.parseInt(br.readLine());
 		map = new char[N][N];
@@ -28,11 +27,7 @@ public class Main {
 		int waist = getLength(hy+1, hx, 1, 0, 0);
 		int leftLeg = getLength(hy+waist+1, hx-1, 1, 0, 0);
 		int rightLeg = getLength(hy+waist+1, hx+1, 1, 0, 0);
-		bw.append(leftArm+" ");
-		bw.append(rightArm+" ");
-		bw.append(waist+" ");
-		bw.append(leftLeg+" ");
-		bw.append(rightLeg+" ");
+		bw.append(leftArm+" "+rightArm+" "+waist+" "+leftLeg+" "+rightLeg);
 		bw.flush();
 	}
 
