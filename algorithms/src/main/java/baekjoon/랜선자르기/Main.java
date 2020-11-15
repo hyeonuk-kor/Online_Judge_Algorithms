@@ -5,21 +5,30 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		int K = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken());
 		
-		int T = Integer.parseInt(br.readLine());
-		for(int tc=1; tc<=T; tc++) {
-			int length = Integer.parseInt(br.readLine());
-			int arr[] = new int[length];
-			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-			for(int i=0; i<length; i++) {
-				arr[i] = Integer.parseInt(st.nextToken());
-			}
-			if(tc==1)
-				bw.append(3+"\n");
-			else
-				bw.append(0+"\n");
+		int[] l = new int[K];
+		for(int i=0; i<K; i++) {
+			l[i] = Integer.parseInt(br.readLine());
 		}
+		Arrays.parallelSort(l);
+		long start = 1;
+		long end = l[K-1];
+		while(start<=end) {
+			long mid = (start+end)/2;
+			int count = 0;
+			for(int i=0; i<K; i++) {
+				count += (l[i]/mid);
+			}
+			if(count<N) {
+				end = mid-1;
+			} else if(count>=N) {
+				start = mid+1;
+			}
+		}
+		bw.append(end+"");
 		bw.flush();
-		bw.close();
 	}
 }
