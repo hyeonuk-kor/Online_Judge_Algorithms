@@ -33,7 +33,6 @@ public class Main {
 		}
 		bw.flush();
 	}
-	
 	static int getRoll(int y, int x, int cmd) {
 		int answer = 0;
 		int temp[];
@@ -80,7 +79,7 @@ public class Main {
 			dice[5] = temp[6];
 			dice[6] = temp[2];
 			break;
-		case 4:
+		case 4: //남쪽
 			answer = dice[2];
 			if(map[y][x]==0) {
 				map[y][x] = dice[5];
