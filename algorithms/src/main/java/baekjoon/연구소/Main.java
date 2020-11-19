@@ -4,8 +4,8 @@ import java.io.*;
 public class Main {
 	static int answer, N, M;
 	static int[][] map, copyMap;
-	static int dir[][] = { {0,1}, {0,-1}, {1,0}, {-1,0} };
 	static boolean[][] built, check;
+	static int dir[][] = { {0,1}, {0,-1}, {1,0}, {-1,0} };
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -29,7 +29,9 @@ public class Main {
 	static void simulate(int y, int x, int count) {
 		if(count==3) {
 			preTest();
-			spreadVirus();
+			check = new boolean[N][M];
+			//spreadVirusBFS();
+			getVirusDFS(0,0);
 			answer = Math.max(answer, getCleanArea());
 			return;
 		}
@@ -50,6 +52,30 @@ public class Main {
 		}
 		simulate(y,x+1,count);
 	}
+	static void getVirusDFS(int y, int x) {
+		if(y==N) 
+			return;
+		if(x==M) {
+			getVirusDFS(y+1, 0);
+			return;
+		}
+		if(copyMap[y][x]==2)
+			spreadVirusDFS(y, x);
+		getVirusDFS(y, x+1);
+	}
+	static void spreadVirusDFS(int y, int x) {
+		check[y][x]=true;
+		for (int i=0; i<4; i++) {
+			int ny = y + dir[i][0];
+			int nx = x + dir[i][1];
+			if(ny<0 || nx<0 || ny>=N || nx>=M || check[ny][nx] || copyMap[ny][nx]!=0)
+				continue;
+			if(copyMap[ny][nx]==0) {
+				copyMap[ny][nx]=2;
+				spreadVirusDFS(ny, nx);
+			}
+		}
+	}
 	static void preTest() {
 		copyMap = new int[N][M];
 		for(int i=0; i<N; i++) 
@@ -65,8 +91,7 @@ public class Main {
 		}
 		return count;
 	}
-	static void spreadVirus() {
-		check = new boolean[N][M];
+	static void spreadVirusBFS() {
 		Queue<int[]> q = new ArrayDeque<int[]>();
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<M; j++) {
