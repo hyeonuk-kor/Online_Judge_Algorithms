@@ -1,29 +1,25 @@
 package baekjoon.연구소;
-
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-
+import java.io.*;
+import java.util.*;
 public class buildWall {
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static boolean[][] visit;
 	static int[][] map;
 	public static void main(String[] args) throws Exception {
-		
-		map = new int[8][8];
-		visit = new boolean[8][8];
+		map = new int[3][3];
+		visit = new boolean[3][3];
 		buildWall(0);
 		bw.append("끝");
 		bw.flush();
 	}
-
 	static void buildWall(int count) throws Exception {
 		if(count==3) {
 			int[][] temp = new int[map.length][];
 			for(int i=0; i<map.length; i++) {
 				temp[i] = map[i].clone();
-				System.out.println(Arrays.toString(temp[i]));
+				bw.append(Arrays.toString(temp[i])+"\n");
 			}
+			bw.append("\n");
 			return;
 		}
 		for(int i=0; i<map.length; i++) {
@@ -37,6 +33,5 @@ public class buildWall {
 				}
 			}
 		}
-	}
-	
+	}	
 }
