@@ -7,23 +7,15 @@ public class Main {
 	static char cube[][][];
 	public static void main(String[] args) {
 		makeCube();
-		rotate('L', '+');
+		rotate('R', '-');
 		for(int i=0; i<3; i++)
 			System.out.println(Arrays.toString(cube[U][i]));
-		rotate('L', '+');
-		for(int i=0; i<3; i++)
-			System.out.println(Arrays.toString(cube[U][i]));
-		rotate('L', '+');
-		for(int i=0; i<3; i++)
-			System.out.println(Arrays.toString(cube[U][i]));
-		rotate('L', '+');
-		for(int i=0; i<3; i++)
-			System.out.println(Arrays.toString(cube[U][i]));
+		
 	}
 
-	static void rotate(char square, char dir) {
+	static void rotate(char cmd, char dir) {
 		char temp[] = new char[3];
-		switch (square) {
+		switch (cmd) {
 		case 'L':
 			if(dir=='+') {
 				for(int i=0; i<3; i++) {
@@ -45,14 +37,26 @@ public class Main {
 			break;
 		case 'R':
 			if(dir=='+') {
-
+				for(int i=0; i<3; i++) {
+					temp[i] = cube[B][i][2];
+					cube[B][i][2] = cube[U][i][2];
+					cube[U][i][2] = cube[F][i][2];
+					cube[F][i][2] = cube[D][i][2];
+					cube[D][i][2] = temp[i];
+				}
 			} else {
-
+				for(int i=0; i<3; i++) {
+					temp[i] = cube[D][i][2];
+					cube[D][i][2] = cube[F][i][2];
+					cube[F][i][2] = cube[U][i][2];
+					cube[U][i][2] = cube[B][i][2];
+					cube[B][i][2] = temp[i];
+				}
 			}
 			break;
 		case 'U':
 			if(dir=='+') {
-
+				
 			} else {
 
 			}
