@@ -18,16 +18,14 @@ public class Main {
 		int sy = Integer.parseInt(st.nextToken());
 		int sx = Integer.parseInt(st.nextToken());
 		int dir = Integer.parseInt(st.nextToken());
-
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int j=0; j<M; j++) {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		
 		simulate(sy, sx, dir, 0);
-		bw.append(answer+"");
+		bw.append(Integer.toString(answer));
 		bw.flush();
 	}
 	static void simulate(int y, int x, int d, int count) {
@@ -38,7 +36,7 @@ public class Main {
 				case SOUTH : y=y-1; break;
 				case WEST : x=x+1; break;
 			}
-			if(isRange(y, x) && map[y][x]!=1)
+			if(!isRange(y, x) && map[y][x]!=1)
 				simulate(y, x, d, 0);
 			return;
 		}
@@ -49,17 +47,16 @@ public class Main {
 		if(searchArea(ny, nx)) {
 			simulate(ny, nx, d, 0); 
 			answer++;
-		} else { //청소공간 없음
+		} else { 
 			simulate(y, x, d, count+1);
 		}
 	}
 	static boolean searchArea(int y, int x) {
-		if(!isRange(y, x)) return false; //경계
-		if(map[y][x]==1) return false; //벽
-		if(check[y][x]) return false; // 청소된 구역
+		if(isRange(y, x) || map[y][x]==1 || check[y][x]) 
+			return false;
 		return true;
 	}
 	static boolean isRange(int y, int x) {
-		return (y>=0 && x>=0 && y<N && x<M);
+		return (y<0 || x<0 || y>=N || x>=M);
 	}
 }
