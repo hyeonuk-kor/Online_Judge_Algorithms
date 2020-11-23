@@ -20,6 +20,7 @@ public class Main {
 		} 
 
 		int half = size/2;
+		System.out.println(y+" "+x+" "+size+" "+isRange(y, x, size));
 		if(isRange(y, x, size)) {
 			getResult(half, y, x);
 			getResult(half, y, x+half);
