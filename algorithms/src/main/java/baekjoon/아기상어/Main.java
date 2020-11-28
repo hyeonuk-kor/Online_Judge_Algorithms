@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.*;
 public class Main {
 	static int N, map[][], size=2, sy, sx, exp;
+	static PriorityQueue<int[]> pq;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
@@ -18,11 +19,15 @@ public class Main {
 				}
 			}
 		}
-		int answer = 0;
+		System.out.println(simulate());
+	}
+	static int simulate() {
+		int move = 0;
+		pqInit();
 		int[] info = getFindFish(sy, sx);
 		while(info!=null) { // 먹을 수 있는 물고기가 없을 때 까지
 			sy = info[0]; sx = info[1]; map[sy][sx] = 0; //물고기를 먹은 곳으로부터 다시 시작
-			answer += info[2]; //이동한 거리를 더함.
+			move += info[2]; //이동한 거리를 더함.
 			exp++; //먹었으니 경험치 증가
 			if(exp==size) { //경험치가 해당 상어의 사이즈가 되면 레벨업한다.
 				exp = 0;
@@ -30,12 +35,10 @@ public class Main {
 			}
 			info = getFindFish(sy, sx); //다시 물고기를 찾는다.
 		}
-		System.out.println(answer);
+		return move;
 	}
-	static int[] getFindFish(int sy, int sx) {
-		int dir[][] = {{-1,0},{0,-1},{1,0},{0,1}};
-		boolean[][] visit = new boolean[N][N];
-		PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+	static void pqInit() {
+		pq = new PriorityQueue<>(new Comparator<int[]>() {
 			int result = 0;
 			@Override
 			public int compare(int[] o1, int[] o2) {
@@ -51,6 +54,10 @@ public class Main {
 		        return o1[index]-o2[index];
 		    }
 		});
+	}
+	static int[] getFindFish(int sy, int sx) {
+		int dir[][] = {{-1,0},{0,-1},{1,0},{0,1}};
+		boolean[][] visit = new boolean[N][N];
 		visit[sy][sx]=true;
 		pq.add(new int[] {sy, sx,0});
 		while(!pq.isEmpty()) {
@@ -58,8 +65,10 @@ public class Main {
 			int y = info[0];
 			int x = info[1];
 			int move = info[2];
-			if(map[y][x]<size && map[y][x]!=0) 
+			if(map[y][x]<size && map[y][x]!=0) {
+				pq.clear();
 				return new int[] {y, x, move};
+			}
 			for(int d=0; d<4; d++) {
 				int ny = y + dir[d][0];
 				int nx = x + dir[d][1];
