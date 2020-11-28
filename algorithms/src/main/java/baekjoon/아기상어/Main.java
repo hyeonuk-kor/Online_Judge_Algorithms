@@ -8,7 +8,6 @@ public class Main {
 		N = Integer.parseInt(br.readLine());
 		map = new int[N][N];
 		StringTokenizer st = null;
-
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int j=0; j<N; j++) {
@@ -21,37 +20,35 @@ public class Main {
 		}
 		int answer = 0;
 		int[] info = getFindFish(sy, sx);
-		while(info!=null) {
-			sy = info[0];
-			sx = info[1];
-			map[sy][sx] = 0;
-			answer += info[2];
-			exp++;
-			if(exp==size) {
+		while(info!=null) { // 먹을 수 있는 물고기가 없을 때 까지
+			sy = info[0]; sx = info[1]; map[sy][sx] = 0; //물고기를 먹은 곳으로부터 다시 시작
+			answer += info[2]; //이동한 거리를 더함.
+			exp++; //먹었으니 경험치 증가
+			if(exp==size) { //경험치가 해당 상어의 사이즈가 되면 레벨업한다.
 				exp = 0;
 				size++;
 			}
-			info = getFindFish(sy, sx);
+			info = getFindFish(sy, sx); //다시 물고기를 찾는다.
 		}
 		System.out.println(answer);
 	}
-
 	static int[] getFindFish(int sy, int sx) {
 		int dir[][] = {{-1,0},{0,-1},{1,0},{0,1}};
 		boolean[][] visit = new boolean[N][N];
 		PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+			int result = 0;
 			@Override
 			public int compare(int[] o1, int[] o2) {
-				int out = compareUsingIndex(2, o1, o2);
-				if(out!=0) return out;
-				out = compareUsingIndex(0, o1, o2);
-				if(out!=0) return out;
-				return compareUsingIndex(1, o1, o2);
+				result = compareUsingIndex(2, o1, o2);
+				if(result!=0) 
+					return result;	// 거리가 가까운 물고기 우선
+				result = compareUsingIndex(0, o1, o2);
+				if(result!=0) 
+					return result;	// 가까운 물고기가 여럿일 땐 가장 위에 있는 물고기 우선
+				return compareUsingIndex(1, o1, o2); // 위 두 조건을 동시에 성립할 때, 가장 왼쪽 우선 
 			}
-			private int compareUsingIndex(int index, int[] o1, int[] o2){
-		        if (o1[index]==o2[index]){return 0;}
-		        else if (o1[index]>o2[index]){return 1;}
-		        return -1;
+			private int compareUsingIndex(int index, int[] o1, int[] o2) {
+		        return o1[index]-o2[index];
 		    }
 		});
 		visit[sy][sx]=true;
@@ -75,5 +72,4 @@ public class Main {
 		}
 		return null;
 	}
-
 }
