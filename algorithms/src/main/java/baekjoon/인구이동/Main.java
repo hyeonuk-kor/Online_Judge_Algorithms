@@ -5,7 +5,6 @@ public class Main {
 	static int N, L, R, map[][];
 	static boolean[][] visit;
 	static int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
-	static boolean check;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -22,33 +21,24 @@ public class Main {
 		}
 		int drift = 0;
 		while(drift<=2000) {
-			int map2[][] = new int[N][N];
-			for(int i=0; i<N; i++) 
-				map2[i] = map[i].clone();
+			int count = 0;
 			for(int i=0; i<N; i++) {
 				for(int j=0; j<N; j++) {
 					if(visit[i][j]) continue;
+					count++;
 					visit[i][j]=true;
 					bfs(i, j);
 				}
 			}
-			if(check(map2)) {
+			if(count<N*N) {
 				for(int i=0; i<N; i++)
 					Arrays.fill(visit[i], false);
 				drift++;
-			} else break;
-		}
-		System.out.println(drift);
-	}
-	static boolean check(int[][] map2) {
-		for(int i=0; i<N; i++) {
-			for(int j=0; j<N; j++) {
-				if(map[i][j]!=map2[i][j]) {
-					return true;
-				}
+			} else {
+				break;
 			}
 		}
-		return false;
+		System.out.println(drift);
 	}
 	static void bfs(int i, int j) {
 		int sum = 0;
@@ -70,6 +60,7 @@ public class Main {
 				}
 			}
 		}
+		if(sum==map[i][j]) return;
 		int count = q2.size();
 		while(!q2.isEmpty()) {
 			int[] info = q2.poll();
