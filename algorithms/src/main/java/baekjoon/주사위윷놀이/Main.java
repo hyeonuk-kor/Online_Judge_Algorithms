@@ -25,7 +25,7 @@ class Node {
 }
 public class Main {
 	static int dice[] = new int[10], order[] = new int[10], answer;
-	static Node[] coin = new Node[4];
+	static Node[] yut = new Node[4];
 	static Node start, end;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -48,7 +48,7 @@ public class Main {
 	}
 	static int simulation(int sum) {
 		for(int i=0; i<10; i++) {
-			Node current = coin[order[i]];
+			Node current = yut[order[i]];
 			current.isCombine = false;
 			for(int j=0; j<dice[i]; j++) {
 				if(j==0 && current.specialPoint!=null) 
@@ -56,7 +56,7 @@ public class Main {
 				else 
 					current = current.next;
 			}
-			coin[order[i]] = current;
+			yut[order[i]] = current;
 			if(current.isCombine && current!=end) {
 				sum = 0;
 				break;
@@ -66,8 +66,8 @@ public class Main {
 			}
 		}
 		for(int i=0; i<4; i++) {
-			coin[i].isCombine = false;
-			coin[i] = start;
+			yut[i].isCombine = false;
+			yut[i] = start;
 		}
 		return sum;
 	}
@@ -96,6 +96,6 @@ public class Main {
 		
 		center.addNode(30).addNode(35).next = node.getNode(start, 40);
 		
-		Arrays.fill(coin, start);
+		Arrays.fill(yut, start);
 	}
 }
