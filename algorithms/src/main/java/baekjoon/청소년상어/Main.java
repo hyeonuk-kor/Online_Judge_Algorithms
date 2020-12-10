@@ -28,9 +28,9 @@ public class Main {
 	}
 
 	static void simulation(Fish map[][], int y, int x, int sum) {
-		sum += map[y][x].number;
+		sum = sum + map[y][x].number;
 		map[y][x].number=-1;
-		moveFish(map, y, x);
+		map = moveFish(map, y, x);
 		ArrayDeque<int[]> q = moveShark(map, y, x);
 		if(q.size()==0) {
 			answer = Math.max(sum, answer);
@@ -43,6 +43,7 @@ public class Main {
 				simulation(mapClone(map), ny, nx, sum);
 			}
 		}
+
 	}
 
 	static Fish[][] mapClone(Fish[][] map) {
@@ -67,9 +68,10 @@ public class Main {
 		return q;
 	}
 
-	static void moveFish(Fish map[][], int sy, int sx) {
+	static Fish[][] moveFish(Fish map[][], int sy, int sx) {
 		for(int i=1; i<=16; i++) {
 			int[] fishInfo = findFish(map, i);
+
 			if(fishInfo!=null) {
 				int y = fishInfo[0];
 				int x = fishInfo[1];
@@ -77,7 +79,7 @@ public class Main {
 				for(int j=0; j<8; j++) {
 					int ny = y + dir[d][0];
 					int nx = x + dir[d][1];
-					if(ny<0 || nx<0 || ny>=4 || nx>=4 || (ny==sy && nx==sx)) {
+					if(ny<0 || nx<0 || ny>=4 || nx>=4 || (ny==sy && nx==sx) ) {
 						d=(d==7)?0:d+1;
 						continue;
 					}
@@ -91,13 +93,15 @@ public class Main {
 				}
 			}
 		}
+		return map;
 	}
 
 	static int[] findFish(Fish map[][], int number) {
 		for(int i=0; i<4; i++) 
 			for(int j=0; j<4; j++)
-				if(map[i][j].number==number)
+				if(map[i][j].number==number) {
 					return new int[] {i, j};
+				}
 		return null;
 	}
 
