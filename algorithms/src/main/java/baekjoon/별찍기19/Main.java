@@ -1,26 +1,27 @@
 package baekjoon.별찍기19;
-import java.util.*;
+import java.io.*;
 public class Main {
-
+	static BufferedWriter bw;
 	static int N;
-	static char map[][];
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		map = new char[4*N-3][4*N-3];
-		for(int i=0; i<map.length; i++) {
-			Arrays.fill(map[i],' ');
-		}
-		fillArray(0,0,N);
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		printChar('*', 7);
+		bw.append('\n');
+		printMiddele(5, 7);
+		printChar('*', 7);
+		bw.flush();
 	}
-
-	static void fillArray(int y, int x, int size) {
-		if(size==0) 
-			return;
-		
-		for(int i=0; i<size; i++) {
-			if(i==0 || i==y-1) {}
+	static void printMiddele(int r, int n) throws Exception {
+		if(r>0) {
+			bw.append('*'); printChar(' ', n-2); bw.append('*'); bw.append('\n');
+			printMiddele(r-1, n);
 		}
 	}
-
+	static void printChar(char c, int n) throws Exception {
+		if(n>0) {
+			bw.append(c);
+			printChar(c, n-1);
+		}
+	}
 }
