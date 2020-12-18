@@ -15,7 +15,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int c=0; c<n; c++) {
 				String cmd = st.nextToken();
-				rotate(cmd.charAt(0), cmd.charAt(1)=='+');
+				rotate(cmd.charAt(0), cmd.charAt(1)=='+'); 
 			}
 			char[][] pov = leftRotate(U);
 			for(int i=0; i<3; i++) {
