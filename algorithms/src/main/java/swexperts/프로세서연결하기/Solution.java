@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 class Solution {
 	static int size, map[][], dir[][] = {{0,1},{0,-1},{1,0},{-1,0}};
-	static int maxCore=Integer.MIN_VALUE, minLength=Integer.MAX_VALUE;
+	static int maxCore, minLength;
 	static ArrayList<int[]> core;
 	static boolean visit[][];
 	public static void main(String[] args) throws Exception {
@@ -12,6 +12,8 @@ class Solution {
 		StringTokenizer st = null;
 		int T = Integer.parseInt(br.readLine());
 		for(int tc=1; tc<=T; tc++) {
+			maxCore=Integer.MIN_VALUE;
+			minLength=Integer.MAX_VALUE;
 			size = Integer.parseInt(br.readLine());
 			map = new int[size][size];
 			core = new ArrayList<>();
