@@ -17,11 +17,12 @@ public class Main {
 				sum += map[i][j];
 			}
 		}
-		long maxHeight = (sum+B)/(N*M);
-		long minTime = Long.MAX_VALUE;
-		long height = 0;
-		for(long k=0; k<=maxHeight; k++) {
-			long time = 0;
+		long avg = (sum+B)/(N*M);
+		int maxHeight = (avg>256)?256:(int)avg;
+		int minTime = Integer.MAX_VALUE;
+		int height = 0;
+		for(int k=0; k<=maxHeight; k++) {
+			int time = 0;
 			for(int i=0; i<N; i++) {
 				for(int j=0; j<M; j++) {
 					if(map[i][j]>k) {
