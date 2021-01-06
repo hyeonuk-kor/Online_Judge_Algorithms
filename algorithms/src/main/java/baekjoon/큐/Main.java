@@ -33,14 +33,16 @@ class Queue implements MyQueue {
 	}
 	@Override
 	public boolean isEmpty() {
-		return front == back;
+		return this.front == this.back;
 	}
 	@Override
 	public int front() {
+		if(isEmpty()) return -1;
 		return array[this.front];
 	}
 	@Override
 	public int back() {
+		if(isEmpty()) return -1;
 		return array[this.back-1];
 	}
 }
