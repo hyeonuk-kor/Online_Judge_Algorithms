@@ -19,9 +19,7 @@ public class Main {
 	}
 	static int getW(int a, int b, int c) {
 		String key = getKey(a,b,c);
-		if(w.containsKey(key)) {
-			return w.get(key);
-		} else {
+		if(!w.containsKey(key)) {
 			if(a<=0 || b<=0 || c<=0) {
 				w.put(key, 1);
 			} else if(a>20 || b>20 || c>20) { 
@@ -31,8 +29,8 @@ public class Main {
 			} else {
 				w.put(key, getW(a-1, b, c) + getW(a-1, b-1, c) + getW(a-1, b, c-1) - getW(a-1, b-1, c-1));
 			}
-			return w.get(key);
 		}
+		return w.get(key);
 	}
 	static String getKey(int a, int b, int c) {
 		return "w("+a+", "+b+", "+c+") = ";
