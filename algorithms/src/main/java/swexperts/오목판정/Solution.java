@@ -32,11 +32,11 @@ public class Solution {
         return "NO";
     }
     static boolean check(char[][] board, int size, int dir, int i, int j, int count) {
-        if(count==5 && board[i][j]=='o')
+        if(count==5)
             return true;
         int ny = i + dy[dir];
         int nx = j + dx[dir];
-        if(ny<0 || nx<0 || ny>=size || nx>=size || board[i][j]=='.')
+        if(ny<0 || nx<0 || ny>=size || nx>=size || board[ny][nx]=='.')
             return false;
         return check(board, size, dir, ny, nx, count+1);
     }
