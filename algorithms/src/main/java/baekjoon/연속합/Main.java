@@ -1,27 +1,19 @@
 package baekjoon.연속합;
 import java.io.*;
+import java.util.*;
 public class Main {
 	public static void main(String[] args) throws Exception {
-		Reader r = new Reader();
-		int n =  r.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		int[] memo = new int[n];
-		memo[0] = r.nextInt();
-		int answer = -1000;
+		memo[0] = Integer.parseInt(st.nextToken());
+		int max = memo[0];
 		for(int i=1; i<n; i++) {
-			int number = r.nextInt();
+			int number = Integer.parseInt(st.nextToken());
 			memo[i] = Math.max(memo[i-1]+number, number);
-			answer = Math.max(answer, memo[i]);
+			max = Math.max(max, memo[i]);
 		}
-		System.out.println(answer);
-	}
-	static class Reader {
-		StreamTokenizer st;
-		public Reader() {
-			st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-		}
-		int nextInt() throws Exception {
-			st.nextToken();
-			return (int)st.nval;
-		}
-	}
+		System.out.println(max);
+	}	
 }
