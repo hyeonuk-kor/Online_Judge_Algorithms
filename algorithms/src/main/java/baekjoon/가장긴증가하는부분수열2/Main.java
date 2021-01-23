@@ -7,29 +7,22 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine()," ");
-		ArrayList<Integer> arr = new ArrayList<>();
-		ArrayList<Integer> lis = new ArrayList<>();
-		for(int i=0; i<N; i++) 
-			arr.add(Integer.parseInt(st.nextToken()));
-		lis.add(arr.get(0));
-		int idx = 1;
-		int temp = 0;
+		ArrayList<Integer> calc = new ArrayList<>();
+		calc.add(Integer.parseInt(st.nextToken()));
 		for(int i=1; i<N; i++) {
-			if(lis.get(idx-1)<arr.get(i)) {
-				lis.add(idx++, arr.get(i));
-			} else if(lis.get(0)>arr.get(i)) {
-				lis.set(0, arr.get(i));
+			int value = Integer.parseInt(st.nextToken());
+			if(calc.get(calc.size()-1)<value) {
+				calc.add(value);
 			} else {
-				temp = Collections.binarySearch(lis, arr.get(i));
-				if(temp>=0) {
-					lis.set(temp, arr.get(i));
+				int right = Collections.binarySearch(calc, value);
+				if(right>=0) {
+					calc.set(right, value);
 				} else {
-					lis.set(-temp-1, arr.get(i));
+					calc.set(-right-1, value);
 				}
 			}
 		}
-		
-		bw.append(idx+"\n");
+		bw.append(calc.size()+"\n");
 		bw.flush();
 	}
 }
