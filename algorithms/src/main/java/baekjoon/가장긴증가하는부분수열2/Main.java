@@ -7,22 +7,22 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine()," ");
-		ArrayList<Integer> calc = new ArrayList<>();
-		calc.add(Integer.parseInt(st.nextToken()));
+		ArrayList<Integer> lis = new ArrayList<>();
+		lis.add(Integer.parseInt(st.nextToken()));
 		for(int i=1; i<N; i++) {
 			int value = Integer.parseInt(st.nextToken());
-			if(calc.get(calc.size()-1)<value) {
-				calc.add(value);
+			if(lis.get(lis.size()-1)<value) {
+				lis.add(value);
 			} else {
-				int right = Collections.binarySearch(calc, value);
+				int right = Collections.binarySearch(lis, value);
 				if(right>=0) {
-					calc.set(right, value);
+					lis.set(right, value);
 				} else {
-					calc.set(-right-1, value);
+					lis.set(-right-1, value);
 				}
 			}
 		}
-		bw.append(calc.size()+"\n");
+		bw.append(lis.size()+"\n");
 		bw.flush();
 	}
 }
