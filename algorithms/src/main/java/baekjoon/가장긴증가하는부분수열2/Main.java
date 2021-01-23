@@ -28,9 +28,8 @@ public class Main {
 				}
 			}
 		}
+		
 		bw.append(idx+"\n");
-		for(int number: lis) 
-			bw.append(number+" ");
 		bw.flush();
 	}
 }
