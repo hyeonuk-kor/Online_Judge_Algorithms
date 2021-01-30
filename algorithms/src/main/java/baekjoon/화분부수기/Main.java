@@ -13,7 +13,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			for(int j=0; j<3; j++)
 				pot[j]=Integer.parseInt(st.nextToken());
-			if(!broken[pot[0]]==!broken[pot[1]]==!broken[pot[2]])
+			if(!broken[pot[0]] && !broken[pot[1]] && !broken[pot[2]])
 				answer++;
 			broken[pot[0]] = broken[pot[1]] = broken[pot[2]] = true;
 		}
