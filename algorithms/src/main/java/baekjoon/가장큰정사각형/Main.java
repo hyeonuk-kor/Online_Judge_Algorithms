@@ -18,8 +18,7 @@ public class Main {
 		for(int i=1; i<=n; i++) {
 			for(int j=1; j<=m; j++) {
 				if(arr[i][j]==1) {
-					arr[i][j] = Math.min(arr[i-1][j-1], arr[i-1][j]);
-					arr[i][j] = Math.min(arr[i][j-1]  , arr[i][j]) + 1;
+					arr[i][j] = Math.min(arr[i-1][j-1], Math.min(arr[i-1][j], arr[i][j-1])) + 1;
 					max = Math.max(arr[i][j], max);
 				}
 			}
