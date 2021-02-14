@@ -1,50 +1,40 @@
 package baekjoon.LCS;
 import java.io.*;
 import java.util.*;
-class LCS {
-	int index;
-	char subCharacter;
-	public LCS(int index, char subCharacter) {
-		this.index = index;
-		this.subCharacter = subCharacter;
-	}
-}
 public class Main {
 	static Map<String, Integer> memo = new HashMap<>();
-	static Stack<LCS> stack = new Stack<>();
-	static String A, B;
+	static String A, B, C;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		A = br.readLine();
 		B = br.readLine();
-		int result = LCS(A.length()-1, B.length()-1);
+		C = br.readLine();
+		int result = LCS(A.length()-1, B.length()-1, C.length()-1);
 		bw.append(result+"\n");
-		StringBuilder sb = new StringBuilder();
-		while(!stack.isEmpty()) {
-			LCS info = stack.pop();
-			if(info.index==result) {
-				sb.append(info.subCharacter);
-				result--;
-			}
-		}
-		bw.append(sb.reverse());
 		bw.flush();
 	}
-	static int LCS(int lastIdxA, int lastIdxB) {
+	static int LCS(int lastIdxA, int lastIdxB, int lastIdxC) {
 		int result = 0;
-		if(lastIdxA<0 || lastIdxB<0)
+		if(lastIdxA<0 || lastIdxB<0 || lastIdxC<0)
 			return result;
-		String key = lastIdxA + " " + lastIdxB;
+		String key = lastIdxA + " " + lastIdxB + " " + lastIdxC;
 		if(memo.containsKey(key))
 			return memo.get(key);
-		if(A.charAt(lastIdxA)==B.charAt(lastIdxB)) {
-			result = 1 + LCS(lastIdxA-1, lastIdxB-1);
-			stack.push(new LCS(result, A.charAt(lastIdxA)));
+		if(A.charAt(lastIdxA)==B.charAt(lastIdxB) && B.charAt(lastIdxB)==C.charAt(lastIdxC)) {
+			result = 1 + LCS(lastIdxA-1, lastIdxB-1, lastIdxC-1);
 		} else {
-			int frontRemove = LCS(lastIdxA-1, lastIdxB);
-			int backRemove = LCS(lastIdxA, lastIdxB-1);
-			result = Math.max(frontRemove, backRemove);
+			int sub1 = LCS(lastIdxA-1, lastIdxB, lastIdxC);
+			int sub2 = LCS(lastIdxA, lastIdxB-1, lastIdxC);
+			int sub3 = LCS(lastIdxA, lastIdxB, lastIdxC-1);
+			int sub4 = LCS(lastIdxA, lastIdxB-1, lastIdxC-1);
+			int sub5 = LCS(lastIdxA-1, lastIdxB, lastIdxC-1);
+			int sub6 = LCS(lastIdxA-1, lastIdxB-1, lastIdxC);
+			result = Math.max(sub1, sub2);
+			result = Math.max(result, sub3);
+			result = Math.max(result, sub4);
+			result = Math.max(result, sub5);
+			result = Math.max(result, sub6);
 		}
 		memo.put(key, result);
 		return result;
