@@ -1,4 +1,4 @@
-package baekjoon.LCS;
+package baekjoon.LCS3;
 import java.io.*;
 public class Main {
 	static int memo[][][] = new int[101][101][101];
