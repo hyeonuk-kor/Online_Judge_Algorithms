@@ -1,8 +1,7 @@
 package baekjoon.LCS;
 import java.io.*;
-import java.util.*;
 public class Main {
-	static Map<String, Integer> memo = new HashMap<>();
+	static int memo[][][] = new int[101][101][101];
 	static String A, B, C;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -10,6 +9,13 @@ public class Main {
 		A = br.readLine();
 		B = br.readLine();
 		C = br.readLine();
+		for(int i=0; i<101; i++) {
+			for(int j=0; j<101; j++) {
+				for(int k=0; k<101; k++) {
+					memo[i][j][k]=-1;
+				}
+			}
+		}
 		int result = LCS(A.length()-1, B.length()-1, C.length()-1);
 		bw.append(result+"\n");
 		bw.flush();
@@ -18,9 +24,8 @@ public class Main {
 		int result = 0;
 		if(lastIdxA<0 || lastIdxB<0 || lastIdxC<0)
 			return result;
-		String key = lastIdxA + " " + lastIdxB + " " + lastIdxC;
-		if(memo.containsKey(key))
-			return memo.get(key);
+		if(memo[lastIdxA][lastIdxB][lastIdxC]!=-1)
+			return memo[lastIdxA][lastIdxB][lastIdxC];
 		if(A.charAt(lastIdxA)==B.charAt(lastIdxB) && B.charAt(lastIdxB)==C.charAt(lastIdxC)) {
 			result = 1 + LCS(lastIdxA-1, lastIdxB-1, lastIdxC-1);
 		} else {
@@ -36,7 +41,6 @@ public class Main {
 			result = Math.max(result, sub5);
 			result = Math.max(result, sub6);
 		}
-		memo.put(key, result);
-		return result;
+		return memo[lastIdxA][lastIdxB][lastIdxC] = result;
 	}
 }
