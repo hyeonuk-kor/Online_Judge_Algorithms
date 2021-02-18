@@ -1,4 +1,4 @@
-package baekjoon.최소스패닝트리;
+package baekjoon.최소스패닝트리Prim;
 import java.util.*;
 import java.io.*;
 class Edge implements Comparable<Edge> {
