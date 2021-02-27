@@ -33,5 +33,11 @@ public class Solution {
 			bw.append("#"+tc+" "+high+"\n");
 		}
 		bw.flush();
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }
