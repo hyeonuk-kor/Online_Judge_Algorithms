@@ -41,7 +41,7 @@ public class Main {
 		int unity = K;
 		int dy[] = {0,0,1,-1};
 		int dx[] = {1,-1,0,0};
-		while(unity>1) {
+		loop:while(true) {
 			while(!q1.isEmpty()) {
 				int y = q1.peek()[0];
 				int x = q1.peek()[1];
@@ -52,12 +52,10 @@ public class Main {
 						continue;
 					if(set.find(map[ny][nx])!=set.find(map[y][x])) {
 						set.union(map[ny][nx], map[y][x]);
-						unity--;
+						if(--unity==1)
+							break loop;
 					}
 				}
-			}
-			if(unity==1) {
-				break;
 			}
 			while(!q2.isEmpty()) {
 				int[] point = q2.poll();
