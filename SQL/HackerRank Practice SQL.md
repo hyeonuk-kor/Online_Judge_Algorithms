@@ -60,7 +60,109 @@
   WHERE MOD(ID,2)=0;
   ```
 
-  
+- ##### Weather Observation Station 4
 
+  ```SQL
+  SELECT COUNT(CITY) - COUNT(DISTINCT CITY)
+  FROM STATION;
+  ```
 
+- ##### Weather Observation Station 5
+
+  ```SQL
+  (SELECT CITY, LENGTH(CITY)
+  FROM STATION
+  ORDER BY LENGTH(CITY), CITY LIMIT 1)
+  UNION 
+  (SELECT CITY, LENGTH(CITY)
+  FROM STATION
+  ORDER BY LENGTH(CITY) DESC LIMIT 1)
+  ```
+
+- ##### Weather Observation Station 6
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE LEFT(LOWER(CITY),1) IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 7
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE RIGHT(LOWER(CITY),1) IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 8
+
+  ```sql
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE LEFT(LOWER(CITY),1) IN ('a','e','i','o','u')
+  AND RIGHT(LOWER(CITY),1) IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 9
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE LEFT(LOWER(CITY),1) NOT IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 10
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE RIGHT(LOWER(CITY),1) NOT IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 11
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE LEFT(LOWER(CITY),1) NOT IN ('a','e','i','o','u')
+  OR RIGHT(LOWER(CITY),1) NOT IN ('a','e','i','o','u');
+  ```
+
+- ##### Weather Observation Station 12
+
+  ```SQL
+  SELECT DISTINCT(CITY)
+  FROM STATION
+  WHERE LEFT(LOWER(CITY),1) NOT IN ('a','e','i','o','u')
+  AND RIGHT(LOWER(CITY),1) NOT IN ('a','e','i','o','u');
+  ```
+
+- ##### Higher Than 75 Marks
+
+  ```SQL
+  SELECT NAME
+  FROM STUDENTS
+  WHERE MARKS > 75
+  ORDER BY RIGHT(NAME, 3), ID;
+  ```
+
+- ##### Employee Names
+
+  ```SQL
+  SELECT NAME
+  FROM EMPLOYEE
+  ORDER BY NAME;
+  ```
+
+- ##### Employee Salaries
+
+  ```SQL
+  SELECT NAME
+  FROM EMPLOYEE
+  WHERE MONTHS<10 AND SALARY > 2000
+  ORDER BY EMPLOYEE_ID;
+  ```
+
+- ### You just solved all the Basic Select challenges in SQL!
 
