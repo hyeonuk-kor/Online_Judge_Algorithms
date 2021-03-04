@@ -289,7 +289,164 @@
   order by c.company_code;
   ```
 
+
+
+## Aggregation
+
+- ##### Revising Aggregations - The Count Function
+
+  ```sql
+  select count(*)
+  from city
+  where population > 1000;
+  ```
+
+- ##### Revising Aggregations - The Sum Function
+
+  ```sql
+  select sum(population)
+  from city
+  where district='California';
+  ```
+
+- ##### Revising Aggregations - Averages
+
+  ```sql
+  select avg(population)
+  from city
+  where district='California';
+  ```
+
+- ##### Average Population
+
+  ```sql
+  select round(avg(population)
+  from city;
+  /* other */   
+  select floor(avg(population))
+  from city;
+  ```
+
+- ##### Japan Population
+
+  ```sql
+  select sum(population)
+  from city
+  where countrycode='jpn'
+  ```
+
+- ##### Population Density Difference
+
+  ```sql
+  select max(population) - min(population)
+  from city;
+  ```
+
+- ##### The Blunder
+
+  ```sql
+  select ceil(avg(salary) - avg(replace(salary, '0', '')))
+  from employees;
+  ```
+
+- ##### Top Earners
+
+  ```sql
+  select max(salary*months), count((salary*months))
+  from employee
+  group by (salary*months)
+  order by salary*months desc
+  limit 1
+  ```
+
+- ##### Weather Observation Station 2
+
+  ```sql
+  select round(sum(lat_n), 2), round(sum(long_w), 2)
+  from station
+  ```
+
+- ##### Weather Observation Station 13
+
+  ```sql
+  select round(sum(lat_n), 4)
+  from station
+  where lat_n > 38.7880 and lat_n < 137.2345
+  ```
+
+- ##### Weather Observation Station 14
+
+  ```sql
+  select round(max(lat_n), 4)
+  from station
+  where lat_n < 137.2345;
+  ```
+
+- ##### Weather Observation Station 15
+
+  ```sql
+  select round(max(long_w), 4)
+  from station
+  where lat_n = (select max(lat_n) from station where lat_n < 137.2345);
+  ```
+
+- ##### Weather Observation Station 16
+
+  ```sql
+  select round(min(lat_n), 4)
+  from station
+  where lat_n > 38.7780;
+  ```
+
+- ##### Weather Observation Station 17
+
+  ```sql
+  select round(max(long_w), 4)
+  from station
+  where lat_n = (select min(lat_n) from station where lat_n > 38.7780);
+  ```
+
+- ##### Weather Observation Station 18
+
+  ```sql
+  select round(abs(min(lat_n)-max(lat_n))+abs(min(long_w)-max(long_w)), 4)
+  from station;
+  ```
+
+- ##### Weather Observation Station 19
+
+  ```sql
+  select round(sqrt(
+      power(max(lat_n)-min(lat_n),2) + power(max(long_w)-min(long_w),2)
+               ), 4)
+  from station;
+  ```
+
+- ##### Weather Observation Station 20
+
+  ```sql
+  /* mysql */
+  set @row := -1;
+  select 
+      round(avg(t.lat), 4)
+  from
+      (
+          select @row:=@row + 1 as r, lat_n as lat
+          from station
+          order by lat
+      ) as t
+  where t.r in (floor(@row/2), ceil(@row/2));
   
+  /* oracle */
+  select round(median(lat_n), 4)
+  from station;
+  ```
+
+  
+
+
+
+
 
 
 
