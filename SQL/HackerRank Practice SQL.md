@@ -8,20 +8,20 @@
 
   ```sql
   select * from city
-  where population > 100000 and countrycode='usa'
+  where population > 100000 and countrycode='usa';
   ```
 
 - ##### REVISING the Select Query II
 
   ```sql
   select name from city
-  where population > 120000 and countrycode='usa'
+  where population > 120000 and countrycode='usa';
   ```
 
 - ##### Select ALL
 
   ```sql
-  select * from city
+  select * from city;
   ```
 
 - ##### Select By ID
@@ -49,7 +49,7 @@
 
   ```SQL
   SELECT CITY, STATE
-  FROM STATION
+  FROM STATION;
   ```
 
 - ##### Weather Observation Station 3
@@ -76,7 +76,7 @@
   UNION 
   (SELECT CITY, LENGTH(CITY)
   FROM STATION
-  ORDER BY LENGTH(CITY) DESC LIMIT 1)
+  ORDER BY LENGTH(CITY) DESC LIMIT 1);
   ```
 
 - ##### Weather Observation Station 6
@@ -166,3 +166,24 @@
 
 - ### You just solved all the Basic Select challenges in SQL!
 
+
+
+## Advanced SELECT
+
+- ##### Type of Triangle
+
+  ```sql
+  SELECT
+      CASE
+          WHEN A+B>C AND B+C>A AND C+A>B THEN
+              CASE 
+                  WHEN A=B AND B=C AND C=A THEN 'Equilateral'
+                  WHEN A=B OR B=C OR C=A THEN 'Isosceles'
+                  WHEN A!=B AND B!=C AND C!=A THEN 'Scalene'
+              END
+          ELSE 'Not A Triangle'
+      END
+  FROM TRIANGLES;
+  ```
+
+  
