@@ -544,6 +544,23 @@
   order by count(C.hacker_id) desc, c.hacker_id
   ```
 
+- ##### Contest Leaderboard
+
+  ```sql
+  select 
+      h.hacker_id, name, sum(score) as totalScore
+  from
+      hackers as h
+      inner join
+      (select hacker_id, max(score) as score
+       from submissions
+       group by challenge_id, hacker_id) maxScore
+       on h.hacker_id = maxScore.hacker_id
+  group by h.hacker_id, name
+  having totalScore > 0
+  order by totalScore desc, h.hacker_id;
+  ```
+
   
 
 
