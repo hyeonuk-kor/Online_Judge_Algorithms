@@ -442,6 +442,55 @@
   from station;
   ```
 
+
+
+
+## Basic Join
+
+- ##### Asian Population
+
+  ```sql
+  select 
+      sum(city.population)
+  from
+      city inner join country
+      on city.countrycode = country.code
+  where country.continent='asia';
+  ```
+
+- ##### African Cities
+
+  ```sql
+  select 
+  	city.name
+  from
+      city inner join country
+      on city.countrycode = country.code
+  where country.continent='africa';
+  ```
+
+- ##### Average Population of Each Continent
+
+  ```sql
+  select country.continent, floor(avg(city.population))
+  from city inner join country
+  on city.countrycode = country.code
+  group by country.continent;
+  ```
+
+- ##### The Report
+
+  ```sql
+  select 
+      if(grade<8, null, name), 
+      grade, 
+      marks
+  from
+      students inner join grades
+  where marks between min_mark and max_mark
+  order by grade desc, name
+  ```
+
   
 
 
