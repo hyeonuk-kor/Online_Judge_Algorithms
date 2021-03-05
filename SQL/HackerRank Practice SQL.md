@@ -491,6 +491,59 @@
   order by grade desc, name
   ```
 
+- ##### Top Competitors
+
+  ```sql
+  select hacker_id, name
+  from 
+  submissions s 
+  inner join challenges c on s.challenge_id = c.challenge_id
+  inner join difficulty d on c.difficulty_level = d.difficulty_level 
+  inner join hackers h on s.hacker_id = h.hacker_id
+  where s.score = d.score and c.difficulty_level = d.difficulty_level
+  group by h.hacker_id, h.name
+  having count(s.hacker_id) > 1
+  order by count(s.hacker_id) desc, s.hacker_id asc
+  ```
+
+- ##### Ollivander's Inventory
+
+  ```sql
+  SELECT
+      w.id, p.age, w.coins_needed, w.power
+  FROM
+      Wands w INNER JOIN Wands_Property p ON w.code = p.code
+  WHERE
+      w.coins_needed = (SELECT MIN(coins_needed)
+                      FROM Wands w2 INNER JOIN Wands_Property p2 ON w2.code = p2.code
+                      WHERE p2.is_evil = 0 AND w.power = w2.power AND p.age = p2.age)
+  ORDER BY
+      w.power DESC, p.age DESC
+  ```
+
+- ##### Challenges
+
+  ```sql
+  select C.hacker_id, H.name, count(C.hacker_id)
+  from
+  Hackers as H inner join Challenges as C
+  on c.hacker_id = h.hacker_id
+  group by c.hacker_id, H.name
+  having cnt = (
+      select count(c1.challenge_id) 
+      from challenges as c1 
+      group by c1.hacker_id
+  	order by count(*) desc
+  	limit 1
+  ) or cnt not in (
+  	select count(c2.challenge_id)
+      from challenges as c2
+      group by c2.hacker_id
+      having c2.hacker_id <> c.hacker_id
+  )
+  order by count(C.hacker_id) desc, c.hacker_id
+  ```
+
   
 
 
