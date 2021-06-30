@@ -20,14 +20,12 @@ function solution(answers) {
     var index = 0;
     for(var i=0; i<p.length; i++) {
         if(p[i]==max) {
-            answer_count[index++] = [i+1, p[i]];
+            answer_count[index++] = i+1;
         }
     }
-    answer_count.sort(function(a, b) {
-        return a[0]-b[0];
-    });
+    answer_count.sort();
     for(var i=0; i<answer_count.length; i++) {
-        answer.push(answer_count[i][0]);
+        answer.push(answer_count[i]);
     }
     return answer;
 }
