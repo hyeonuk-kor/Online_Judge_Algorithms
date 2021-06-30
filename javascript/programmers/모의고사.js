@@ -1,31 +1,33 @@
 function solution(answers) {
     var answer = [];
-    var people = [
+    var answer_sheets = [
         [1,2,3,4,5],
         [2,1,2,3,2,4,2,5],
         [3,3,1,1,2,2,4,4,5,5]
     ];
-    var p = [];
+    var student_score = [];
     var max = 0;
-    for(var i=0; i<people.length; i++) {
-        p[i] = 0;
+    for(var i=0; i<answer_sheets.length; i++) {
+        student_score[i] = 0;
         for(var j=0; j<answers.length; j++) {
-            if(people[i][j%(people[i].length)]==answers[j]) {
-                p[i]++;
+            if(answer_sheets[i][j%(answer_sheets[i].length)]==answers[j]) {
+                student_score[i]++;
             }
         }
-        max = Math.max(max, p[i]);
+        if(max<student_score[i])
+            max = student_score[i];
     }
-    var answer_count = [];
-    var index = 0;
-    for(var i=0; i<p.length; i++) {
-        if(p[i]==max) {
-            answer_count[index++] = i+1;
+    //var max = student_score.reduce(function(x, y) {return (x>y)?x:y;});
+    var score = [];
+    var score_index = 0;
+    for(var i=0; i<student_score.length; i++) {
+        if(student_score[i]==max) {
+            score[score_index++] = i+1;
         }
     }
-    answer_count.sort();
-    for(var i=0; i<answer_count.length; i++) {
-        answer.push(answer_count[i]);
+    score.sort();
+    for(var i=0; i<score.length; i++) {
+        answer.push(score[i]);
     }
     return answer;
 }
