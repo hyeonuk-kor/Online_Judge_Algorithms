@@ -1,37 +1,36 @@
 console.log(solution("17"));
-var check, allNumber;
+var check, set;
 function solution(numbers) {
     var answer = 0;
     check = new Array(numbers.length);
-    allNumber = new Set([]);
-    for(var i=1; i<=numbers.length; i++) {
-        getNumber(numbers,[], 0, i);
-    }
-    allNumber.forEach(element => {
-        var check = element>1?true:false;
-        for(var i=2; i<element; i++) {
-            if(element%i==0) {
-                check=false;
-                break;
-            }
-        }
-        if(check) {
+    set = new Set([]);
+    for(var i=1; i<=numbers.length; i++)
+        makeNumber(numbers, [], 0, i);
+    set.forEach(element => {
+        if(isPrime(element))
             answer++;
-        }
     });
     return answer;
 }
-function getNumber(numbers, array, depth, end) {
-    if(depth==end) {
-        allNumber.add(parseInt(array.join("")));
+function isPrime(number) {
+    if(number<=1) 
+        return false;
+    for(var i=2; i<number; i++) 
+        if(number%i==0)
+            return false;
+    return true;
+}
+function makeNumber(numbers, str, depth, length) {
+    if(depth==length) {
+        set.add(parseInt(str.join("")));
         return;
     }
     for(var i=0; i<numbers.length; i++) {
         if(!check[i]) {
             check[i] = true;
-            array.push(numbers.charAt(i));
-            getNumber(numbers, array, depth+1, end);
-            array.pop();
+            str.push(numbers.charAt(i));
+            makeNumber(numbers, str, depth+1, length);
+            str.pop();
             check[i] = false;
         }
     }
