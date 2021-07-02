@@ -10,9 +10,8 @@ function solution(answers) {
     for(var i=0; i<answer_sheets.length; i++) {
         student_score[i] = 0;
         for(var j=0; j<answers.length; j++) {
-            if(answer_sheets[i][j%(answer_sheets[i].length)]==answers[j]) {
+            if(answer_sheets[i][j%(answer_sheets[i].length)]==answers[j])
                 student_score[i]++;
-            }
         }
     }
     var max = Math.max(...student_score);
