@@ -7,7 +7,6 @@ function solution(answers) {
         [3,3,1,1,2,2,4,4,5,5]
     ];
     var student_score = [];
-    var max = 0;
     for(var i=0; i<answer_sheets.length; i++) {
         student_score[i] = 0;
         for(var j=0; j<answers.length; j++) {
@@ -15,10 +14,8 @@ function solution(answers) {
                 student_score[i]++;
             }
         }
-        if(max<student_score[i])
-            max = student_score[i];
     }
-    //var max = student_score.reduce(function(x, y) {return (x>y)?x:y;});
+    var max = Math.max(...student_score);
     for(var i=0; i<student_score.length; i++) {
         if(student_score[i]==max) {
             answer.push(i+1);
