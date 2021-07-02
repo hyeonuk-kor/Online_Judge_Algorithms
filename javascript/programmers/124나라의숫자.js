@@ -1,6 +1,5 @@
 console.log(solution(100));
 function solution(n) {
-    console.log(-1%3);
     var answer = '';
     while(n>0) {
         if(n%3==0) {
