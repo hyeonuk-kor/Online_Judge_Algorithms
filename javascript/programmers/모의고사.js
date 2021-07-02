@@ -1,3 +1,4 @@
+console.log(solution([1,3,2,4,2]))
 function solution(answers) {
     var answer = [];
     var answer_sheets = [
@@ -18,16 +19,10 @@ function solution(answers) {
             max = student_score[i];
     }
     //var max = student_score.reduce(function(x, y) {return (x>y)?x:y;});
-    var score = [];
-    var score_index = 0;
     for(var i=0; i<student_score.length; i++) {
         if(student_score[i]==max) {
-            score[score_index++] = i+1;
+            answer.push(i+1);
         }
-    }
-    score.sort();
-    for(var i=0; i<score.length; i++) {
-        answer.push(score[i]);
     }
     return answer;
 }
