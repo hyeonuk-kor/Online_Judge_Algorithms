@@ -6,3 +6,8 @@ function solution(s) {
     }
     return parseInt(s);
 }
+
+function maxfind() {
+
+}
+
