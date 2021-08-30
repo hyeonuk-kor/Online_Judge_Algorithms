@@ -26,7 +26,7 @@ public class Solution {
 			String symbol = st.nextToken();
 			for(int j=5; j>=1; j--) {
 				String key = st.nextToken();
-				calc[i] += j * (map.containsKey(key)?map.get(key):0);
+				calc[i] += j * map.getOrDefault(key, 0);
 			}
 			if(max<calc[i]) {
 				max = calc[i];
