@@ -39,49 +39,6 @@ public class Main {
 		sy = getScore[0]; sx = getScore[1];
 		return true;
 	}
-	static void rotate() {
-		int temp[][] = new int[N][N];
-		for (int i = 0; i < board.length; i++)
-			temp[i] = board[i].clone();
-		for(int i=0; i<N; i++)
-			for(int j=0; j<N; j++)
-				board[i][j] = temp[j][N-i-1];
-	}
-	static void gravity() {
-		for(int i=0; i<N; i++) {
-			ArrayDeque<Integer> q = new ArrayDeque<Integer>();
-			for(int j=0; j<N; j++) {
-				if(board[j][i]==-1) {
-					int sy = j;
-					while(!q.isEmpty()) {
-						int down = q.poll();
-						board[--sy][i]=down;
-					}
-				} else if(board[j][i]!=BLANK) {
-					q.addFirst(board[j][i]);
-				} else {
-					q.addLast(BLANK);
-				}
-			}
-			int by = N;
-			while(!q.isEmpty()) {
-				int down = q.poll();
-				board[--by][i]=down;
-			}
-		}
-	}
-	static void removeBlock(int y, int x, int color) {
-		visit[y][x] = true;
-		board[y][x] = BLANK;
-		for(int d=0; d<4; d++) {
-			int ny = y + dy[d];
-			int nx = x + dx[d];
-			if(isMove(ny, nx) && !visit[ny][nx] && 
-			  (board[ny][nx]==color || board[ny][nx]==RAINBOW)) {
-				removeBlock(ny, nx, color);
-			}
-		}
-	}
 	static int[] findBlock() {
 		int gy=0, gx=0, max_rainbow=0, max_size=0;
 		for (int y = 0; y < board.length; y++) {
@@ -129,6 +86,50 @@ public class Main {
 		}
 		return count;
 	}
+	static void removeBlock(int y, int x, int color) {
+		visit[y][x] = true;
+		board[y][x] = BLANK;
+		for(int d=0; d<4; d++) {
+			int ny = y + dy[d];
+			int nx = x + dx[d];
+			if(isMove(ny, nx) && !visit[ny][nx] && 
+			  (board[ny][nx]==color || board[ny][nx]==RAINBOW)) {
+				removeBlock(ny, nx, color);
+			}
+		}
+	}
+	static void gravity() {
+		for(int i=0; i<N; i++) {
+			ArrayDeque<Integer> q = new ArrayDeque<Integer>();
+			for(int j=0; j<N; j++) {
+				if(board[j][i]==-1) {
+					int sy = j;
+					while(!q.isEmpty()) {
+						int down = q.poll();
+						board[--sy][i]=down;
+					}
+				} else if(board[j][i]!=BLANK) {
+					q.addFirst(board[j][i]);
+				} else {
+					q.addLast(BLANK);
+				}
+			}
+			int by = N;
+			while(!q.isEmpty()) {
+				int down = q.poll();
+				board[--by][i]=down;
+			}
+		}
+	}
+	static void rotate() {
+		int temp[][] = new int[N][N];
+		for (int i = 0; i < board.length; i++)
+			temp[i] = board[i].clone();
+		for(int i=0; i<N; i++)
+			for(int j=0; j<N; j++)
+				board[i][j] = temp[j][N-i-1];
+	}
+
 	static boolean isMove(int ny, int nx) {
 		return !(nx<0 || nx>=N || ny<0 || ny>=N);
 	}
