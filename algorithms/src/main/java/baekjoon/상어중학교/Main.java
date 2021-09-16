@@ -24,7 +24,7 @@ public class Main {
 		while(autoPlay()) {
 			visit = new boolean[N][N];
 			removeBlock(sy, sx, board[sy][sx]);
-			sum += Math.pow(getScore[2], 2);
+			sum += getScore[2]*getScore[2];
 			gravity();
 			rotate();
 			gravity();
@@ -123,13 +123,11 @@ public class Main {
 	}
 	static void rotate() {
 		int temp[][] = new int[N][N];
-		for (int i = 0; i < board.length; i++)
-			temp[i] = board[i].clone();
 		for(int i=0; i<N; i++)
 			for(int j=0; j<N; j++)
-				board[i][j] = temp[j][N-i-1];
+				temp[i][j] = board[j][N-i-1];
+		board = temp;
 	}
-
 	static boolean isMove(int ny, int nx) {
 		return !(nx<0 || nx>=N || ny<0 || ny>=N);
 	}
