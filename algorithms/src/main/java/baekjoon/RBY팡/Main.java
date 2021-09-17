@@ -17,41 +17,37 @@ public class Main {
 	}
 	static int changeBall(int index) {
 		int color = ball[index];
-		int result1=N, result2=N;
 		ball[index] = selectBall(color-1);
-		result1 = pang(index, index, N);
+		int result1 = pang(index, index, N);
 		ball[index] = selectBall(color+1);
-		result2 = pang(index, index, N);
+		int result2 = pang(index, index, N);
 		ball[index] = color;
 		return Math.min(result1, result2);
 	}
 	static int selectBall(int number) {
-		if(number==4)
-			return 1;
-		else if(number==0)
+		if(number==0)
 			return 3;
+		else if(number==4)
+			return 1;
 		else
 			return number;
 	}
-	static int pang(int up, int down, int size) {
-		int up_block = 1, down_block = 1;
-		int next_up = up, next_down = down;
-		while(next_up-1>=0 && ball[next_up]==ball[next_up-1]) {
-			next_up--;
-			up_block++;
+	static int pang(int left, int right, int size) {
+		if(size<4 || left<0 || right<0 || left>=N || right>=N || ball[left]!=ball[right])
+			return size;
+		int l = left, r = right;
+		int left_count = 1, right_count = 1;
+		while(l-1>=0 && ball[l]==ball[l-1]) {
+			left_count++;
+			l--;
 		}
-		while(next_down+1<N && ball[next_down]==ball[next_down+1]) {
-			next_down++;
-			down_block++;
+		while(r+1<N && ball[r]==ball[r+1]) {
+			right_count++;
+			r++;
 		}
-		int block=0;
-		if(up>=0 && up<N && down>=0 && down<N) {
-			if(ball[up]==ball[down]) {
-				block = up_block + down_block -(up==down?1:0);
-				if(block>=4)
-					size = pang(next_up-1, next_down+1, size-block);
-			}
-		} 
+		int score = left_count+right_count-(left==right?1:0);
+		if(score>=4)
+			size = pang(l-1, r+1, size-score);
 		return size;
 	}
 }
