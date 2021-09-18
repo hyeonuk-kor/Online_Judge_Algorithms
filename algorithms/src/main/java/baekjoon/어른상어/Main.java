@@ -62,8 +62,6 @@ public class Main {
 	static int simulation() {
 		int time = 0;
 		while(time++>1000) {
-			sharkMove();
-			smell();
 			return time;
 		}
 		return -1;
