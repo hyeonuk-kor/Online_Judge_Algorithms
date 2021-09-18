@@ -4,8 +4,8 @@ import java.util.*;
 public class Main {
 	static class Shark {
 		int number, y, x, dir;
-		boolean exist;
 		List<ArrayList<Integer>> order;
+		boolean exist;
 		public Shark(int number, int y, int x, int dir, boolean exist, List<ArrayList<Integer>> order) {
 			this.number = number;
 			this.y = y;
@@ -17,15 +17,12 @@ public class Main {
 		public int getNumber() {
 			return number;
 		}
-		@Override
-		public String toString() {
-			return "Shark [number=" + number + ", y=" + y + ", x=" + x + ", dir=" + dir + ",\n order=" + order + "]\n";
-		}
 	}
-	static final int SMELL=0, TIMETABLE=1;
+	static final int LOC=0, SMELL=1, TIMETABLE=2;
 	static int N, M, K, board[][][];
 	static int dy[] = {-1, 1, 0, 0};
 	static int dx[] = {0, 0, -1, 1};
+	static boolean visit[][];
 	static List<Shark> shark = new ArrayList<>(); 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,14 +30,15 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
-		board = new int[2][N][N];
+		board = new int[3][N][N];
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int j=0; j<N; j++) {
-				board[SMELL][i][j] = Integer.parseInt(st.nextToken());
-				if(board[SMELL][i][j]!=0) {
+				board[LOC][i][j] = Integer.parseInt(st.nextToken());
+				if(board[LOC][i][j]!=0) {
+					board[SMELL][i][j]=board[LOC][i][j];
 					board[TIMETABLE][i][j]=K;
-					shark.add(new Shark(board[SMELL][i][j], i, j, 0, true, new ArrayList<>()));
+					shark.add(new Shark(board[LOC][i][j], i, j, 0, true, new ArrayList<>()));
 				}
 			}
 		}
@@ -61,20 +59,88 @@ public class Main {
 	}
 	static int simulation() {
 		int time = 0;
-		while(time++>1000) {
-			return time;
+		while(time++<1000) {
+			visit = new boolean[N][N];
+			sharkMovement();
+			smellUpdate();
+			if(sharkCounting()==1)
+				return time;
 		}
-		return -1;
+		return -1;	
 	}
-	private static void print() {
-		for(int i=0; i<N; i++) {
-			System.out.println(Arrays.toString(board[SMELL][i]));
-		}
-		System.out.println();
-		for(int i=0; i<N; i++) {
-			System.out.println(Arrays.toString(board[TIMETABLE][i]));
-		}
-		System.out.println();
+	static int sharkCounting() {
+		int count = shark.size();
+		for(Shark s: shark)
+			if(!s.exist)
+				count--;
+		return count;
 	}
-
+	static void sharkMovement() {
+		for(int n=0; n<shark.size(); n++) {
+			Shark s = shark.get(n);
+			if(!s.exist) continue;
+			int dir = findDir(s.number, s.y, s.x, s.order.get(s.dir));
+			shark.get(n).dir = dir;
+			int ny = s.y + dy[dir], nx = s.x + dx[dir];
+			board[LOC][s.y][s.x]= 0;
+			if(board[LOC][ny][nx]==0) {
+				board[LOC][ny][nx] = s.number;
+			} else {
+				if(board[LOC][ny][nx] > s.number) {
+					shark.get(n).exist = false;
+				} else {
+					for(int i=0; i<shark.size(); i++)
+						if(shark.get(i).number==s.number)
+							shark.get(i).exist = false;
+				}
+			}
+			visit[ny][nx] = true;
+			shark.get(n).y = ny;
+			shark.get(n).x = nx;
+		}
+	}
+	static void smellUpdate() {
+		for(int y=0; y<N; y++) {
+			for(int x=0; x<N; x++) {
+				if(visit[y][x]) {
+					board[SMELL][y][x] = board[LOC][y][x];
+					board[TIMETABLE][y][x] = K;
+				}
+				if(!visit[y][x] && board[TIMETABLE][y][x]>0)
+					board[TIMETABLE][y][x]--;
+			}
+		}
+		for(int y=0; y<N; y++) {
+			for(int x=0; x<N; x++) {
+				if(board[SMELL][y][x]!=0 && board[TIMETABLE][y][x]==0)
+					board[SMELL][y][x] = 0;
+			}
+		}
+	}
+	static int findDir(int number, int y, int x, ArrayList<Integer> dir) {
+		int index = -1;
+		for(int i=0; i<dir.size(); i++) {
+			int ny = y + dy[dir.get(i)];
+			int nx = x + dx[dir.get(i)];
+			if(ny<0 || nx<0 || ny>=N || nx>=N)
+				continue;
+			if(board[SMELL][ny][nx]==0) {
+				index = dir.get(i);
+				break;
+			}
+		}
+		if(index<0) {
+			for(int i=0; i<dir.size(); i++) {
+				int ny = y + dy[dir.get(i)];
+				int nx = x + dx[dir.get(i)];
+				if(ny<0 || nx<0 || ny>=N || nx>=N)
+					continue;
+				if(board[SMELL][ny][nx]==number) {
+					index = dir.get(i);
+					break;
+				}
+			}
+		}
+		return index;
+	}
 }
