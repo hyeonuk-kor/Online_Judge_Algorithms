@@ -23,8 +23,8 @@ public class Main {
 			king = next_king;
 			stone = next_stone;
 		}
-		System.out.println((king));
-		System.out.println((stone));
+		System.out.println(king);
+		System.out.println(stone);
 	}
 	static boolean range(char[] next) {
 		return (next[0]<'A' || next[0]>'H' || next[1]<'1' || next[1]>'8');
