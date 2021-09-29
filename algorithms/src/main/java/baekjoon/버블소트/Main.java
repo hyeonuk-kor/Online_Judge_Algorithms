@@ -2,20 +2,20 @@ package baekjoon.버블소트;
 import java.io.*;
 import java.util.*;
 public class Main {
-	static int N, answer;
-	static long number[];
+	static int N;
+	static long answer, number[];
 	public static void main(String[] args) {
 		input();
 		number = mergeSort(number);
 		System.out.println(answer);
 	}
 	static long[] mergeSort(long[] array) {
-		int mid = array.length/2;
-		long[] left = new long[mid];
-		long[] right = new long[array.length-mid];
 		if(array.length<=1) {
 			return array;
 		} else {
+			int mid = array.length/2;
+			long[] left = new long[mid];
+			long[] right = new long[array.length-mid];
 			// split
 			// left
 			int index = 0;
@@ -26,9 +26,9 @@ public class Main {
 				right[i-index] = array[i];
 			left = mergeSort(left);
 			right = mergeSort(right);
+			//merge
+			return merge(left, right);
 		}
-		//merge
-		return merge(left, right);
 	}
 	static long[] merge(long[] left, long[] right) {
 		long[] array = new long[left.length + right.length];
