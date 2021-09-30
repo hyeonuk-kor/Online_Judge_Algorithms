@@ -33,7 +33,7 @@ public class Main {
 	static void input() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
-			N = Integer.parseInt(br.readLine());
+			N = Integer.parseInt(br.readLine());        
 			br.close();
 			candidate = new ArrayList<>();
 		} catch (Exception e) {
