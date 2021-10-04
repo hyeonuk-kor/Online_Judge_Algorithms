@@ -2,13 +2,13 @@ package baekjoon.기타레슨;
 import java.io.*;
 import java.util.*;
 public class Main {
-	static int N, M, time[];
+	static int N, M, time[], max_time;
 	public static void main(String[] args) {
 		input();
 		pro();
 	}
 	static void pro() { // 이진 탐색을 통해 블루레이의 최소크기를 찾는다.
-		int L = 1, R = (int)1e9, answer = 0; // 블루레이 최대 크기 : 100,000*10,000
+		int L = max_time, R = (int)1e9, answer = 0; // 블루레이 최소 크기 : 강의에서 가장 길었던 시간, 최대 크기 : 100,000*10,000
 		while(L<=R) {
 			int mid = (L+R)/2;
 			if(determination(mid)) { // 블루레이에 나눠서 담을 수 있다면, 최대 크기를 줄여나간다.
@@ -23,11 +23,10 @@ public class Main {
 	static boolean determination(int D) { // D : 녹화가능한 블루레이의 시간
 		int blueray = 1, sum = 0;
 		for(int i=1; i<=N; i++) {
-			if(time[i]>D)	// 녹화가능한 블루레이의 시간보다 강의가 길 경우 대혼란에 빠진다.
-				return false;
-			sum += time[i];
-			if(sum>D) {
+			if(sum+time[i]>D) {
 				blueray++;
+				sum += time[i];
+			} else {
 				sum = time[i];
 			}
 		}
@@ -43,6 +42,7 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			for(int i=1; i<=N; i++) {
 				time[i] = Integer.parseInt(st.nextToken());
+				max_time = Math.max(time[i], max_time);
 			}
 			br.close();
 		} catch (Exception e) {
