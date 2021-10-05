@@ -29,7 +29,7 @@ public class Main {
 				} else if(sum > target) {
 					R--;
 				} else {
-					L--;
+					L++;
 				}
 			}
 		}
