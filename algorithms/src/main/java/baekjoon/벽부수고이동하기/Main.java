@@ -12,17 +12,15 @@ public class Main {
 			return bfs();
 		}
 		int bfs() {
-			Queue<Integer> q = new ArrayDeque<>();
+			Queue<int[]> q = new ArrayDeque<>();
 			visit[0][0] = 0;
-			q.add(0);
-			q.add(0);
-			q.add(0);
-			q.add(1);
+			q.add(new int[] {0,0,0,1});
 			while(!q.isEmpty()) {
-				int y = q.poll();
-				int x = q.poll();
-				int broken = q.poll();
-				int count = q.poll();
+				int info[] = q.poll();
+				int y = info[0];
+				int x = info[1];
+				int broken = info[2];
+				int count = info[3];
 				if(y==N-1 && x==M-1)
 					return count;
 				for (int d = 0; d < dir.length; d++) {
@@ -33,17 +31,11 @@ public class Main {
 					if(visit[ny][nx]<=broken) continue;
 					if(board[ny][nx]==0) {
 						visit[ny][nx] = broken;
-						q.add(ny);
-						q.add(nx);
-						q.add(broken);
-						q.add(count+1);
+						q.add(new int[] {ny, nx, broken, count+1});
 					} else {
 						if(broken==0) {
 							visit[ny][nx] = broken+1;
-							q.add(ny);
-							q.add(nx);
-							q.add(broken+1);
-							q.add(count+1);
+							q.add(new int[] {ny, nx, broken+1, count+1});
 						}
 					}
 				}
