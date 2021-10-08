@@ -56,8 +56,6 @@ public class Main {
 				fill(0,0,0);
 				N = Integer.parseInt(br.readLine());
 				board = new int[9][9];
-				domino = new int[36][2]; // 36개의 도미노 타일
-				makeDominoTile(); //도미노 카드 초기화
 				domino_check = new boolean[36];
 			}
 			return sb.toString();
