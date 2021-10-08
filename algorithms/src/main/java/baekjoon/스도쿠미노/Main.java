@@ -69,70 +69,64 @@ public class Main {
 				print();
 				return true;
 			}
-			if(y==9) return false;
-			if(x==9) {
-				return fill(y+1, 0, depth);
-			}
-			if(board[y][x]!=0) {
-				return fill(y, x+1, depth);
-			}
+			if(y==9) return false;	
+			if(x==9) return fill(y+1, 0, depth);
+			if(board[y][x]!=0) return fill(y, x+1, depth);
 			for(int i=0; i<domino.length; i++) {
 				int num1 = domino[i][0];
 				int num2 = domino[i][1];
 				boolean check;
 				if(domino_check[i]) continue;
-				else {
-					if(x+1<9 && board[y][x+1]==0) { // 가로로 놓기
-						// 가로 순방향 ex : [1,2]
-						if(isPossible(y, x, num1) && isPossible(y, x+1, num2)) {
-							board[y][x] = num1;
-							board[y][x+1] = num2;
-							domino_check[i] = true;
-							check = fill(y, x+1, depth+1); // 다음 탐색
-							if(check)
-								return check;
-							domino_check[i] = false;
-							board[y][x] = 0;
-							board[y][x+1] = 0;
-						}
-						// 가로 역방향 ex : [2, 1]
-						if(isPossible(y, x, num2) && isPossible(y, x+1, num1)) {
-							board[y][x] = num2;
-							board[y][x+1] = num1;
-							domino_check[i] = true;
-							check = fill(y, x+1, depth+1); // 다음 탐색
-							if(check)
-								return check;
-							domino_check[i] = false;
-							board[y][x] = 0;
-							board[y][x+1] = 0;
-						}
+				if(x+1<9 && board[y][x+1]==0) { // 가로로 놓기
+					// 가로 순방향 ex : [1,2]
+					if(isPossible(y, x, num1) && isPossible(y, x+1, num2)) {
+						board[y][x] = num1;
+						board[y][x+1] = num2;
+						domino_check[i] = true;
+						check = fill(y, x+1, depth+1); // 다음 탐색
+						if(check)
+							return check;
+						domino_check[i] = false;
+						board[y][x] = 0;
+						board[y][x+1] = 0;
 					}
-					if(y+1<9 && board[y+1][x]==0) { // 세로로 놓기
-						// 세로 순방향
-						if(isPossible(y, x, num1) && isPossible(y+1, x, num2)) {
-							board[y][x] = num1;
-							board[y+1][x] = num2;
-							domino_check[i] = true;
-							check = fill(y, x+1, depth+1); // 다음 탐색
-							if(check)
-								return check;
-							domino_check[i] = false;
-							board[y][x] = 0;
-							board[y+1][x] = 0;
-						}
-						// 세로 역방향
-						if(isPossible(y, x, num2) && isPossible(y+1, x, num1)) {
-							board[y][x] = num2;
-							board[y+1][x] = num1;
-							domino_check[i] = true;
-							check = fill(y, x+1, depth+1); // 다음 탐색
-							if(check)
-								return check;
-							domino_check[i] = false;
-							board[y][x] = 0;
-							board[y+1][x] = 0;
-						}
+					// 가로 역방향 ex : [2, 1]
+					if(isPossible(y, x, num2) && isPossible(y, x+1, num1)) {
+						board[y][x] = num2;
+						board[y][x+1] = num1;
+						domino_check[i] = true;
+						check = fill(y, x+1, depth+1); // 다음 탐색
+						if(check)
+							return check;
+						domino_check[i] = false;
+						board[y][x] = 0;
+						board[y][x+1] = 0;
+					}
+				}
+				if(y+1<9 && board[y+1][x]==0) { // 세로로 놓기
+					// 세로 순방향
+					if(isPossible(y, x, num1) && isPossible(y+1, x, num2)) {
+						board[y][x] = num1;
+						board[y+1][x] = num2;
+						domino_check[i] = true;
+						check = fill(y, x+1, depth+1); // 다음 탐색
+						if(check)
+							return check;
+						domino_check[i] = false;
+						board[y][x] = 0;
+						board[y+1][x] = 0;
+					}
+					// 세로 역방향
+					if(isPossible(y, x, num2) && isPossible(y+1, x, num1)) {
+						board[y][x] = num2;
+						board[y+1][x] = num1;
+						domino_check[i] = true;
+						check = fill(y, x+1, depth+1); // 다음 탐색
+						if(check)
+							return check;
+						domino_check[i] = false;
+						board[y][x] = 0;
+						board[y+1][x] = 0;
 					}
 				}
 			}
