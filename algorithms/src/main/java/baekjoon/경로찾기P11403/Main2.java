@@ -1,4 +1,4 @@
-package baekjoon.경로찾기;
+package baekjoon.경로찾기P11403;
 import java.util.*;
 import java.io.*;
 public class Main2 {

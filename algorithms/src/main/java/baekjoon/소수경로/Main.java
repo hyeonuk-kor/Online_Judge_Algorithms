@@ -5,53 +5,64 @@ public class Main {
 	static class P1963 {
 		StringBuilder sb = new StringBuilder();
 		int N;
-		String tc[][];
+		int tc[][];
 		boolean visit[];
 		String solve() {
 			input();
 			for(int t=1; t<=N; t++) {
-				visit = new boolean[10000];
-				String from = tc[t][0];
-				String to = tc[t][1];
-				bfs(from, to);
-				sb.append('\n');
+				visit = new boolean[100001];
+				int from = tc[t][0];
+				int to = tc[t][1];
+				int answer= bfs(from, to);
+				if(answer==-1)
+					System.out.println("Impossible\n");
+				else
+					sb.append(answer+"\n");
 			}
 			return sb.toString();
 		}
-		void bfs(String from, String to) {
-			Queue<String> q = new ArrayDeque<>();
-			int answer = 0;
-			if(from.equals(to)) {
-				sb.append(answer);
-				return;
-			} else {
-				q.add(from);
-				q.add("0");
-				visit[Integer.parseInt(from)] = true;
-				while(!q.isEmpty()) {
-					String str = q.poll();
-					int step = Integer.parseInt(q.poll());
-					if(str.equals(to)) {
-						sb.append(step);
-						return;
-					}
-					for(int i=0; i<4; i++) {
-						StringBuilder number = new StringBuilder(str);
-						for(char j='0'; j<='9'; j++) {
-							number.setCharAt(i, j);
-							String next = number.toString();
-							if(isPossible(next)) {
-								q.add(next);
-								q.add((step+1)+"");
-								visit[Integer.parseInt(next)] = true;
-							}
+		int conv(int[] array) {
+			int res = 0;
+			for(int i=0; i<4; i++) {
+				res = res*10+array[i];
+			}
+			return res;
+		}
+		int[] inv_conv(int x) {
+			int array[] = new int[4];
+			for(int i=3; i>=0; i--) {
+				array[i] = x%10;
+				x/=10;
+			}
+			return array;
+		}
+		int bfs(int from, int to) {
+			Queue<Integer> q = new ArrayDeque<>();
+			q.add(from);
+			q.add(0);
+			visit[from] = true;
+			while(!q.isEmpty()) {
+				int number = q.poll();
+				int step = q.poll();
+				if(number==to) {
+					return step;
+				}
+				for(int i=0; i<4; i++) {
+					int[] digit = inv_conv(number);
+					for(int j=0; j<=9; j++) {
+						digit[i] = j;
+						int next = conv(digit);
+						if(isPossible(next)) {
+							q.add(next);
+							q.add(step+1);
+							visit[next] = true;
 						}
 					}
 				}
 			}
+			return -1;
 		}
-		boolean isPossible(String next) {
-			int number = Integer.parseInt(next);
+		boolean isPossible(int number) {
 			if(number<1000)
 				return false;
 			if(visit[number])
@@ -61,7 +72,7 @@ public class Main {
 			return true;
 		}
 		boolean isPrime(int number) {
-			for(int i=2; i<number; i++) {
+			for(int i=2; i*i<number; i++) {
 				if(number%i==0)
 					return false;
 			}
@@ -72,11 +83,11 @@ public class Main {
 			StringTokenizer st = null;
 			try {
 				N = Integer.parseInt(br.readLine());
-				tc = new String[N+1][2];
+				tc = new int[N+1][2];
 				for(int i=1; i<=N; i++) {
 					st = new StringTokenizer(br.readLine());
-					tc[i][0] = st.nextToken();
-					tc[i][1] = st.nextToken();
+					tc[i][0] = Integer.parseInt(st.nextToken());
+					tc[i][1] = Integer.parseInt(st.nextToken());
 				}
 				br.close();
 			} catch (Exception e) {
