@@ -3,29 +3,31 @@ import java.io.*;
 import java.util.*;
 public class Main2 {
 	static class P4991 {
-		static class Test {
+		static class Test {	// 각 테스트케이스
 			int y, x, clean, board[][];
 			public Test(int y, int x, int clean, int[][] board) {
-				this.y = y;
-				this.x = x;
-				this.clean = clean;
-				this.board = board;
+				this.y = y;	// y축 크기
+				this.x = x; // x축 크기
+				this.clean = clean; // 먼지의 수
+				this.board = board; // 격자
 			}
 		}
-		ArrayList<Test> tc;
-		ArrayList<ArrayList<Integer>> order;
-		int number[], select[], graph[][];
-		boolean check[];
-		StringBuilder sb = new StringBuilder();
+		ArrayList<Test> tc; // 테스트케이스가 담긴 리스트
+		ArrayList<ArrayList<Integer>> order; // t.board 격자에서 이동가능한 모든 경우의 수
+		int number[], select[]; // number배열에 시작점+먼지수만큼 초기화 한 뒤, select에서 모든 경우를 구하고 order에 추가
+		boolean check[]; // number와 select 계산 과정에서의 중복확인용 배열
+		int graph[][]; // bfs를 활용하여 시작점과 먼지의 최단 경로를 구함
+		
+		StringBuilder sb = new StringBuilder(); 
 		BufferedReader br;
 		StringTokenizer st;
-		String solve() {
-			input();
-			for (Test test : tc) {
-				preprocess(test); // 갈 수 있는 모든 경우의 수 만들기
-				setGraph(test);
-				int answer = simulate();
-				if(answer == Integer.MAX_VALUE)
+		String solve() { 
+			input(); // 모든 테스트케이스를 입력받는 함수
+			for (Test test : tc) { // 각 테스트 케이스 별로 정답 계산
+				preprocess(test); // 갈 수 있는 모든 경우의 수 만들기 order 리스트가 완성되는 함수
+				setGraph(test); // 현재 테스트 케이스의 최단 경로 계산 graph[][] 배열이 완성되는 함수
+				int answer = simulate(); // order리스트와 graph를 통해 최소를 찾는다.
+				if(answer == Integer.MAX_VALUE) // 최소가 갱신되지 않는다면 -1 출력
 					answer = -1;
 				sb.append(answer).append('\n');
 			}
@@ -57,11 +59,11 @@ public class Main2 {
 			for(int i=1; i<end; i++) {
 				number[i] = i;
 			}
-			select[1] = 1;
+			select[1] = 1; // 먼지에서 시작할 수 없으므로 1은 고정해둔다.
 			check[1] = true;
 			rec_func(2, end);
 		}
-		void rec_func(int depth, int end) {
+		void rec_func(int depth, int end) { // n과 m 문제
 			if(depth==end) {
 				ArrayList<Integer> list = new ArrayList<>();
 				for(int i=1; i<end; i++)
@@ -80,7 +82,7 @@ public class Main2 {
 				}
 			}
 		}
-		void setGraph(Test t) {
+		void setGraph(Test t) { // 그래프를 2차원 배열로 만들고 bfs 함수 호출
 			graph = new int[t.clean][t.clean];
 			for(int i=0; i<graph.length; i++)
 				Arrays.fill(graph[i], -1); //초기 설정
@@ -101,7 +103,7 @@ public class Main2 {
 				}
 			}
 		}
-		int bfs(int[][] board, int y, int x, int from, int to) {
+		int bfs(int[][] board, int y, int x, int from, int to) { // from과 to를 이용해 목적지에 다다르면 즉시 리턴한다. 실패의 경우 -1
 			Queue<int[]> q = new ArrayDeque<>();
 			int row_size = board.length;
 			int col_size = board[0].length;
@@ -133,7 +135,7 @@ public class Main2 {
 			}
 			return -1;
 		}
-		void input() {
+		void input() { // 모든 테스트케이스를 입력받는 곳
 			br = new BufferedReader(new InputStreamReader(System.in));
 			tc = new ArrayList<>();
 			try {
@@ -170,6 +172,6 @@ public class Main2 {
 		}
 	}
 	public static void main(String[] args) {
-		System.out.println(new P4991().solve());
+		System.out.println(new P4991().solve()); // 출력
 	}
 }
