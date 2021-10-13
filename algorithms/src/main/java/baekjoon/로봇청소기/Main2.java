@@ -146,7 +146,7 @@ public class Main2 {
 					if(x==0 && y==0) {
 						break;
 					} else {
-						int board[][] = new int[y][x];
+						int board[][] = new int[y][x]; // 문자 -> 정수로 변환하여 탐색
 						int count = 2;
 						for(int i=0; i<y; i++) {
 							String input = br.readLine();
