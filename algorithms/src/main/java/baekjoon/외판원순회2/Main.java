@@ -20,8 +20,12 @@ public class Main {
 				for(int i=1; i<=n-1; i++) {
 					int from = select[i];
 					int to = select[i+1];
+					if(graph[from][to]==0)
+						return;
 					sum += graph[from][to];
 				}
+				if(graph[end][start]==0)
+					return;
 				sum += graph[end][start];
 				answer = Math.min(answer, sum);
 				return;
