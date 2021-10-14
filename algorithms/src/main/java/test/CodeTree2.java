@@ -2,138 +2,130 @@ package test;
 import java.io.*;
 import java.util.*;
 public class CodeTree2 {
-	static int N;
-	static int[][] board, order, cmd;
-	static int dir[][] = {
-			{0,0}, {-1,0}, {-1,-1}, {0,-1}, {1,-1},{1,0},{1,1},{0,1},{-1,1}	
-	};
 	static class Solution {
 		BufferedReader br;
 		StringTokenizer st;
+		int N, zero, answer, order[][], cmd[][], dir[][] = {
+				{0,0}, 
+				{-1,0}, {-1,-1}, {0,-1}, {1,-1},
+				{1,0}, {1,1}, {0,1}, {-1,1}	
+		};
+		LinkedList<ArrayList<Integer>> board;
 		int solve() {
 			input();
-			return simulate();
+			dfs(0);
+			return answer;
 		}
-		int simulate() {
-			int score = 0;
-			for(int i=0; i<N; i++) {
-				int number = cmd[i][0];
-				int x = cmd[i][1];
-				int find[] = new int[5];
-				if(x==0) {
-					for(int j=1; j<=4; j++) {
-						int[][] copy_board = copy(board);
-						find[j] = drop(j, number, copy_board);
+
+		private void dfs(int depth) {
+			if(depth==zero) {
+				answer = Math.max(answer, game());
+				return;
+			} else {
+				for(int i=0; i<N; i++) {
+					if(cmd[i][1]==0) {
+						for(int j=1; j<=4; j++) {
+							cmd[i][1] = j;
+							dfs(depth+1);
+						}
 					}
-					Arrays.sort(find);
-					score += drop(find[4], number, board);
-				} else {
-					score += drop(x, number, board);
 				}
 			}
-			score += move(board);
-			return score;
 		}
-		int move(int[][] board) {
-			int[][] copy_board = new int[board.length][board[0].length];
-			boolean check = false;
-			for(int i=0; i<board.length; i++) {
-				for(int j=1; j<board[i].length; j++) {
-					if(board[i][j]!=0) {
-						check = true;
+		
+		private void dropBlock(int k, int c) { // k : 블록 종류, c : x축 위치
+			int y = board.size()-1;
+			for(int i=0; i<=y; i++) {
+				if(board.get(i).get(c-1)>0) {
+					y = i-1;
+					break;
+				}
+			}
+			board.get(y).set(c-1, k);
+		}
+		private int getScore() {
+			int sum = 0;
+			int y = board.size()-1;
+			while(y!=0) {
+				if(!board.get(y).contains(0)) {
+					board.remove(y);
+					board.addFirst(emptyArray());
+					sum++;
+				} else {
+					y--;
+				}
+			}
+			return sum;
+		}
+		private int game() {
+			int sum = 0;
+			for(int i=0; i<cmd.length; i++) {
+				dropBlock(cmd[i][0], cmd[i][1]);
+				sum += getScore();
+				gravity();
+				moveBlock();
+				gravity();
+				sum += getScore();
+				gravity();
+			}
+			return sum;
+		}
+		private void gravity() {
+			for(int j=0; j<4; j++) {
+				ArrayDeque<Integer> deq = new ArrayDeque<>();
+				for(int i=0; i<board.size(); i++) {
+					if(board.get(i).get(j)==0) {
+						deq.addLast(0);
+					} else {
+						deq.addFirst(board.get(i).get(j));
+					}
+				}
+				for(int i=0; i<board.size(); i++) {
+					board.get(i).set(j, deq.pollLast());
+				}
+			}
+		}
+		private void moveBlock() {
+			LinkedList<ArrayList<Integer>> next_board = new LinkedList<>();
+			for(int i=0; i<100; i++) {
+				next_board.add(emptyArray());
+			}
+			for(int i=0; i<board.size(); i++) {
+				for(int j=0; j<board.get(i).size(); j++) {
+					if(board.get(i).get(j)!=0) {
+						int number = board.get(i).get(j);
 						for(int d=0; d<8; d++) {
-							int ny = i + dir[order[board[i][j]][d]][0];
-							int nx = j + dir[order[board[i][j]][d]][1];
-							if(ny<1 || nx<1 || ny>=board.length || nx>=board[0].length)
+							int ny = i + dir[order[number][d]][0];
+							int nx = j + dir[order[number][d]][1];
+							if(ny<0 || nx < 0 || ny>=100 || nx>=4)
 								continue;
-							if(board[ny][nx]!=0)
-								copy_board[ny][nx] = Math.min(board[ny][nx], board[i][j]);
-							else if(board[ny][nx]==0)
-								copy_board[ny][nx] = board[i][j];
+							if(next_board.get(ny).get(nx)==0) {
+								next_board.get(ny).set(nx, board.get(i).get(j));
+							} else {
+								int min = Math.min(next_board.get(ny).get(nx), board.get(i).get(j));
+								next_board.get(ny).set(nx, min);
+							}
 							break;
 						}
 					}
 				}
 			}
-			int score = 0;
-			if(check) {
-				for(int k=1; k<=4; k++) {
-					int y = copy_board.length-1;
-					ArrayDeque<Integer> q = new ArrayDeque<>();
-					for(int i=y; i>=0; i--) {
-						if(copy_board[i][k]==0)
-							q.addLast(copy_board[i][k]);
-						else
-							q.addFirst(copy_board[i][k]);
-					}
-					for(int i=y; i>=0; i--) {
-						if(q.isEmpty())
-							break;
-						copy_board[i][k] = q.pollFirst();
-					}
-				}
-				for(int i=copy_board.length-1; i>=0; i--) {
-					if(copy_board[i][1]!=0 && copy_board[i][2]!=0 && copy_board[i][3]!=0 && copy_board[i][4]!=0)
-						score++;
-					else
-						break;
-				}
-			}
-			return score;
+			board = next_board;
 		}
-		private int drop(int x, int number, int[][] board) {
-			int y = board.length-1;
-			ArrayDeque<Integer> q = new ArrayDeque<>();
-			for(int i=y; i>=0; i--) {
-				if(board[i][x]==0) {
-					q.addLast(0);
-				} else {
-					q.addLast(board[i][x]);
-				}
-			}
-			for(int i=y; i>=0; i--) {
-				if(q.peek()==0) {
-					board[i][x] = number;
-					break;
-				}
-				board[i][x] = q.pollFirst();
-			}
-			int del = check(x, board);
-			return del;
-		}
-		private int check(int x, int[][] board) {
-			int count = 0;
-			for(int i=board.length-1; i>=0; i--) {
-				if(board[i][1]!=0 && board[i][2]!=0 && board[i][3]!=0 && board[i][4]!=0)
-					count++;
-				else
-					break;
-			}
-			if(count!=0) {
-				int y = board.length-1;
-				ArrayDeque<Integer> q = new ArrayDeque<>();
-				for(int i=y; i>=0; i--) {
-					q.addLast(board[i][x]);
-				}
-				for(int i=y; i>=0; i--) {
-					if(q.isEmpty())
-						break;
-					board[i][x] = q.pollFirst();
-				}
-			}
-			return count;
-		}
-		private int[][] copy(int[][] origin) {
-			int temp[][] = new int[origin.length][origin[0].length];
-			for(int i=0; i<origin.length; i++)
-				temp[i] = origin[i].clone();
+		private ArrayList<Integer> emptyArray() {
+			ArrayList<Integer> temp = new ArrayList<>();
+			for(int i=0; i<4; i++)
+				temp.add(0);
 			return temp;
 		}
 		private void input() {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				N = Integer.parseInt(br.readLine());
-				board = new int[N+1][5];
+				board = new LinkedList<>();
+				for(int i=0; i<100; i++) {
+					board.add(emptyArray());
+				}
 				order = new int[9][8];
 				for(int i=1; i<=8; i++) {
 					st = new StringTokenizer(br.readLine());
@@ -146,6 +138,8 @@ public class CodeTree2 {
 					st = new StringTokenizer(br.readLine());
 					cmd[i][0] = Integer.parseInt(st.nextToken());
 					cmd[i][1] = Integer.parseInt(st.nextToken());
+					if(cmd[i][1]==0)
+						zero++;
 				}
 				br.close();
 			} catch (Exception e) {
