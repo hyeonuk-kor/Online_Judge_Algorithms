@@ -11,7 +11,7 @@ public class Main {
 		boolean flood[][], visit[][];
 		int solve() {
 			input();
-			for(int h=1; h<=100; h++) {
+			for(int h=0; h<=100; h++) {
 				flood = new boolean[N][N];
 				visit = new boolean[N][N];
 				flooding(h);
