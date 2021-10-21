@@ -35,15 +35,10 @@ public class Main {
 		while(autoPlay()) {
 			visit = new boolean[N][N];
 			removeBlock(sy, sx, board[sy][sx]);
-			
 			sum += getScore[2]*getScore[2];
-			System.out.println(getScore[2]);
 			gravity();
 			rotate();
 			gravity();
-			for(int i=0; i<board.length; i++)
-				System.out.println(Arrays.toString(board[i]));
-			System.out.println();
 		}
 		System.out.println(sum);
 	}
