@@ -59,6 +59,10 @@ public class Solution {
 					o.dir = getDir(o.dir);
 					board2[ny][nx] = o.number;
 					temp[ny][nx] = o.count/2;
+					if(temp[ny][nx]==0) {
+						o.number = 0;
+						o.count = 0;
+					}
 				} else {
 					if(board2[ny][nx]==0) {
 						board2[ny][nx] = o.number;
@@ -90,6 +94,8 @@ public class Solution {
 				for(int j=0; j<N; j++) {
 					if(temp[i][j]!=0) {
 						for(Org o: list) {
+							if(o.number==0)
+								continue;
 							if(board2[i][j]==o.number) {
 								o.count = temp[i][j];
 								break;

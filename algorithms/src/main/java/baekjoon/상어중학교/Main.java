@@ -1,4 +1,15 @@
 package baekjoon.상어중학교;
+/*
+ 6 5
+1 0 -1 1 1 0
+2 2 -1 2 0 -1
+0 1 -1 0 3 3 -1
+4 4 0 4 0 -1
+5 5 0 3 5 -1
+-1 -1 -1 -1 -1 -1
+
+97
+ */
 import java.io.*;
 import java.util.*;
 public class Main {
@@ -7,7 +18,7 @@ public class Main {
 	static int dx[] = {1, -1, 0, 0};
 	static int rainbow_count;
 	static boolean visit[][];
-	static final int BLANK = -9, RAINBOW = 0;
+	static final int BLANK = -2, RAINBOW = 0;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -24,10 +35,15 @@ public class Main {
 		while(autoPlay()) {
 			visit = new boolean[N][N];
 			removeBlock(sy, sx, board[sy][sx]);
+			
 			sum += getScore[2]*getScore[2];
+			System.out.println(getScore[2]);
 			gravity();
 			rotate();
 			gravity();
+			for(int i=0; i<board.length; i++)
+				System.out.println(Arrays.toString(board[i]));
+			System.out.println();
 		}
 		System.out.println(sum);
 	}
