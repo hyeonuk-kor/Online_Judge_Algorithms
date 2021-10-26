@@ -8,7 +8,7 @@ public class Main {
 		int shark_order_dir[][] = new int[64][3]; // 상어의 이동 우선순위
 		int M, S;
 		int shark[][] = new int[4][4];	// 상어 정보
-		int time[][] = new int[4][4]; // 냄새 유지 시간 기록
+		boolean time[][][]; // 냄새 유지 시간 기록
 		int shark_dy[] = {-1, 0, 1, 0}; 
 		int shark_dx[] = { 0,-1, 0, 1};
 		int fish_dy[] = {0,-1,-1,-1, 0, 1, 1, 1};
@@ -46,12 +46,13 @@ public class Main {
 		void solve() { // 문제를 해결하는 함수
 			init(); //초기설정 불러오기
 			input(); // 입력가져오기 
-			
-			while(S-->0) { // S번 마법 연습하기
-				moveFish(S); // 물고기 이동
+			int t = 0;
+			while(t<S) { // S번 마법 연습하기
+				moveFish(t); // 물고기 이동
 				int find_dir = getMaxDir(); // 상어가 많이 먹을 수 있는 dir 찾기
-				eat(find_dir, S); // 진짜로 먹기
+				eat(find_dir, t); // 진짜로 먹기
 				eggGenerate(); // 알 부화시키기
+				t++;
 			}
 			
 			int sum = 0;	// 남은 물고기 계산하기
@@ -79,7 +80,7 @@ public class Main {
 								continue;
 							if(shark[ny][nx]==1)				// 상어면 이동 불가
 								continue;
-							if(time[ny][nx]-t<2)					// 사체가 있을 경우 이동 불가
+							if((t>=1 && time[t-1][ny][nx]) || (t>=2 && time[t-2][ny][nx]))					// 사체가 있을 경우 이동 불가
 								continue;
 							next_fish.get(ny).get(nx).add(dir); // 이동이 가능합니다.
 							check = true;						// 위에서 선언한 check를 true로 변경!
@@ -120,6 +121,8 @@ public class Main {
 				int nx = x; 
 				// 항상 출발은 y, x에서 시작해야해서 복사해둡니다.
 				boolean visit[][] = new boolean[4][4];
+				// 중복 계산을 막기 위해, 방문처리합니다.
+				//visit[ny][nx] = true;
 				// 아래 반복문은 이동시켜보며, 먹을 수 있는 물고기의 양을 계산합니다.
 				for(int f=0; f<3; f++) {
 					ny += shark_dy[shark_order_dir[d][f]];
@@ -158,7 +161,7 @@ public class Main {
 				x += shark_dx[shark_order_dir[find_dir][d]];
 				if(!fish.get(y).get(x).isEmpty()) { // 격자에 물고기가 있다면
 					fish.get(y).get(x).clear(); // 모두 먹어치웁니다.
-					time[y][x] = t;				// 2만큼 지난 뒤에 냄새가 사라지게 처리합니다. 맨 첫줄 removeSmell 이용
+					time[t][y][x] = true;
 				}
 			}
 			shark[y][x] = 1; // 이동 끝
@@ -179,6 +182,7 @@ public class Main {
 				st = new StringTokenizer(br.readLine().trim());
 				M = Integer.parseInt(st.nextToken());
 				S = Integer.parseInt(st.nextToken());
+				time = new boolean[S][4][4];
 				for(int i=0; i<M; i++) {
 					st = new StringTokenizer(br.readLine().trim());
 					int y = Integer.parseInt(st.nextToken())-1;
