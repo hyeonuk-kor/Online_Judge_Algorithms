@@ -1,120 +1,119 @@
 package baekjoon.새로운게임2;
 import java.io.*;
 import java.util.*;
-// 11:02 start
 public class Main2 {
 	static class P17837 {
 		BufferedReader br;
 		StringTokenizer st;
-		class Horse {
-			int number;
-			int y;
-			int x;
-			int d;
-			Horse(int number, int y, int x, int d) {
-				this.number = number;
-				this.y = y;
-				this.x = x;
-				this.d = d;
-			}
-			@Override
-			public String toString() {
-				return "Horse [number=" + number + ", y=" + y + ", x=" + x + ", d=" + d + "]";
-			}
-		}
 		class Board {
 			int color;
-			LinkedList<Horse> list;
-			Board(int color, LinkedList<Horse> list) {
+			LinkedList<Integer> list;
+			Board(int color, LinkedList<Integer> list) {
 				this.color = color;
 				this.list = list;
 			}
-			int findIndex(int number) {
-				int index = 0;
-				while(index<list.size()) {
-					if(list.get(index).number==number) {
-						break;
-					}
-					index++;
-				}
-				return index;
+		}
+		class Horse {
+			int y, x, dir;
+			Horse(int y, int x, int dir) {
+				this.y = y;
+				this.x = x;
+				this.dir = dir;
 			}
 		}
-		Board board[][];
-		ArrayList<Horse> horse;
-		int N, K;
+		int N, K, map[][], answer;
 		int dy[] = {0, 0,-1, 1};
 		int dx[] = {1,-1, 0, 0};
+		Board board[][];
+		ArrayDeque<Integer> horse;
+		Horse h[];
 		void solve() {
 			input();
-			int answer = pro();
+			pro();
 			System.out.println(answer);
 		}
-		int pro() {
-			int turn = 0;
-			Queue<Horse> q = new ArrayDeque<>();
-			while(turn++<1000) {
-				for(int i=0; i<horse.size(); i++) {
-					int number = horse.get(i).number;
-					int y = horse.get(i).y;
-					int x = horse.get(i).x;
-					int d = horse.get(i).d;
-					int ny = y + dy[d];
-					int nx = x + dx[d];
-					int index = 0;
-					switch (board[ny][nx].color) {
-					case 0:
-						index = board[y][x].findIndex(number);
-						for(int j=0; j<=index; j++) {
-							q.add(board[y][x].list.get(j));
-						}
-						while(!q.isEmpty()) {
-							Horse h = q.poll();
-							h.y = ny;
-							h.x = nx;
-							horse.set(h.number-1, h);
-							board[ny][nx].list.addFirst(h);
-						}
-						for(int j=0; j<=index; j++) {
-							board[y][x].list.remove(0);
-						}
-						break;
-					case 1:
-						index = board[y][x].findIndex(number);
-						for(int j=0; j<=index; j++) {
-							q.add(board[y][x].list.get(j));
-						}
-						while(!q.isEmpty()) {
-							Horse h = q.poll();
-							h.y = ny;
-							h.x = nx;
-							horse.set(h.number-1, h);
-							board[ny][nx].list.addFirst(h);
-						}
-						for(int j=0; j<=index; j++) {
-							board[y][x].list.remove(0);
-						}
-						break;
-					case 2:
-						if(d<2) {
-							d = 1 - d;
-						} else {
-							d = 5 - d;
-						}
-						ny = y + dy[d];
-						nx = x + dx[d];
-						if(board[ny][nx].color==2) {
-							ny = y;
-							nx = x;
-						}
-						horse.set(number-1, new Horse(number, ny, nx, d));
-						break;
+		void pro() {
+			horse = new ArrayDeque<>();
+			int turn = 1;
+			while(turn<=1000) {
+				for(int k=0; k<K; k++) {
+					int y = h[k].y, x = h[k].x, d = h[k].dir;
+					int size = board[y][x].list.size();	// 현재 말이 위치한 (y, x)의 말의 총 개수
+					int index = getIndex(y, x, k, size); // 몇 번째에 올려져 있는지?
+					holdUp(index, y, x, size);		// k번 말 위에 있는 것들을 동시에 옮겨야 함
+					currentRemove(index, y, x, size);   // 옮기기 전, 현재 격자에서 제외시킴
+					int ny = y + dy[d];					// 이동할 위치 y 찾기
+					int nx = x + dx[d];					// 이동할 위치 x 찾기
+					if(putAfterSize(ny, nx, d, k)) {		// 옮겼을 때 사이즈가 4 이상이라면 종료
+						answer = turn;
+						return;
 					}
-					if(board[ny][nx].list.size()>=4)
-						return turn;
+				}
+				turn++;
+			}
+			answer = -1;
+		}
+		boolean isRange(int y, int x) {
+			return y<0 || x<0 || y>=N || x>=N;
+		}
+		boolean putAfterSize(int y, int x, int d, int k) {
+			int color = isRange(y, x) ? 2 : board[y][x].color;
+			if(color==2) {
+				// 좌표 & 방향 재 조정
+				d = (d<2) ? 1-d : 5-d;
+				y += dy[d]*2;
+				x += dx[d]*2;
+				color = isRange(y, x) ? 2 : board[y][x].color;
+				if(color==2) { // 그래도 파란색이면 원래 좌표로 되돌림
+					y -= dy[d];
+					x -= dx[d];
+					put(y, x, 0);	// board[y][x].color를 하면 안된다. 가만히 둬야하므로 0으로 처리 
+				} else {
+					put(y, x, color);
+				}
+			} else {
+				put(y, x, color);
+			}
+			int size = board[y][x].list.size();
+			for(int i=0; i<board[y][x].list.size(); i++) {
+				int number = board[y][x].list.get(i);
+				Horse tmp = h[number];
+				if(number==k) {
+					h[number] = new Horse(y, x, d);
+				} else {
+					h[number] = new Horse(y, x, tmp.dir);
 				}
 			}
-			return -1;
+			return size>=4;
+		}
+		void put(int y, int x, int color) {
+			while(!horse.isEmpty()) {
+				if(color==1) {
+					board[y][x].list.add(horse.pollLast());
+				} else {
+					board[y][x].list.add(horse.pollFirst());
+				}
+			}
+		}
+		void currentRemove(int index, int y, int x, int size) {
+			for(int i=index; i<size; i++) {
+				board[y][x].list.remove(index);
+			}
+		}
+		void holdUp(int index, int y, int x, int size) {
+			for(int i=index; i<size; i++) {
+				horse.add(board[y][x].list.get(i));
+			}
+		}
+		int getIndex(int y, int x, int k, int size) {
+			int index = 0;
+			for(int i=0; i<size; i++) {
+				if(board[y][x].list.get(i)==k) {
+					index = i;
+					break;
+				}
+			}
+			return index;
 		}
 		void input() {
 			try {
@@ -122,46 +121,30 @@ public class Main2 {
 				st = new StringTokenizer(br.readLine().trim());
 				N = Integer.parseInt(st.nextToken());
 				K = Integer.parseInt(st.nextToken());
-				board = new Board[N+2][N+2];
-				for(int i=0; i<N+2; i++) {
-					for(int j=0; j<N+2; j++) {
-						board[i][j] = new Board(2, new LinkedList<>());
+				board = new Board[N][N];
+				for(int i=0; i<N; i++) {
+					st = new StringTokenizer(br.readLine().trim());
+					for(int j=0; j<N; j++) {
+						int color = Integer.parseInt(st.nextToken());
+						board[i][j] = new Board(color, new LinkedList<>());
 					}
 				}
-				for(int i=1; i<=N; i++) {
+				h = new Horse[K];
+				for(int i=0; i<K; i++) {
 					st = new StringTokenizer(br.readLine().trim());
-					for(int j=1; j<=N; j++) {
-						board[i][j].color = Integer.parseInt(st.nextToken());
-					}
+					int y = Integer.parseInt(st.nextToken())-1;
+					int x = Integer.parseInt(st.nextToken())-1;
+					int dir = Integer.parseInt(st.nextToken())-1;
+					board[y][x].list.add(i);
+					h[i] = new Horse(y, x, dir);
 				}
-				horse = new ArrayList<>();
-				for(int i=1; i<=K; i++) {
-					st = new StringTokenizer(br.readLine().trim());
-					int y = Integer.parseInt(st.nextToken());
-					int x = Integer.parseInt(st.nextToken());
-					int d = Integer.parseInt(st.nextToken())-1;
-					Horse h = new Horse(i, y, x, d);
-					board[y][x].list.add(h);
-					horse.add(h);
-				}
-				print();
 				br.close();
-				// print();
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-		}
-		void print() {
-			for(int i=0; i<N+2; i++) {
-				for(int j=0; j<N+2; j++) {
-					System.out.print(board[i][j].color+" ");
-				}
-				System.out.println();
 			}
 		}
 	}
 	public static void main(String[] args) {
 		new P17837().solve();
 	}
-
 }
