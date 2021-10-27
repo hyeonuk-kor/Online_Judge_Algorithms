@@ -6,8 +6,6 @@ public class Main {
 		StringBuilder input = new StringBuilder(br.readLine());
 		String A = input.toString();
 		String B = input.reverse().toString();
-		System.out.println(A);
-		System.out.println(B);
 		if(A.equals(B))
 			System.out.println(1);
 		else
