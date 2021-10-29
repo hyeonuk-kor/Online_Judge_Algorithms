@@ -13,7 +13,7 @@ public class Main3 {
 			int left = 0, right = N-1;
 			while(left<right) {
 				int calc = A[left]+A[right];
-				if(Math.abs(calc)<sum) {
+				if(Math.abs(calc)<=sum) {
 					sum = Math.abs(calc);
 					a = A[left];
 					b = A[right];
