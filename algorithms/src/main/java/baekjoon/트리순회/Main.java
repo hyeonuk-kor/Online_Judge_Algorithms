@@ -1,100 +1,67 @@
 package baekjoon.트리순회;
-
 import java.io.*;
 import java.util.*;
-
-class Node {
-	private Node left;
-	private String name;
-	private Node right;
-
-	Node(Node left, String name, Node right) {
-		this.left = left;
-		this.name = name;
-		this.right = right;
-	}
-
-	Node getLeft() {
-		return left;
-	}
-
-	String getName() {
-		return name;
-	}
-
-	Node getRight() {
-		return right;
-	}
-
-}
-
-class Tree {
-	Node makeTree(Node left, Node parent, Node right) {
-		Node node = new Node(left, parent.getName(), right);
-		return node;
-	}
-
-	void preorderTraversal(Node node) {
-		if(node!=null) {
-			System.out.print(node.getName()+" ");
-			preorderTraversal(node.getLeft());
-			preorderTraversal(node.getRight());
-		}
-	}
-
-	void inorderTraversal(Node node) {
-		if(node!=null) {
-			preorderTraversal(node.getLeft());
-			System.out.print(node.getName()+" ");
-			preorderTraversal(node.getRight());
-		}
-	}
-
-	void postorderTraversal(Node node) {
-		if(node!=null) {
-			preorderTraversal(node.getLeft());
-			preorderTraversal(node.getRight());
-			System.out.print(node.getName()+" ");
-		}
-	}
-}
-
 public class Main {
-
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static class P1991 {
+		BufferedReader br;
 		StringTokenizer st;
-		Tree t = new Tree();
-		Node[] a = new Node[26];
-		for(char i='A'; i<='Z'; i++) {
-			a[i-'A'] = new Node(null, i+"", null);
+		StringBuilder sb;
+		int N, graph[][];
+		P1991() {
+			br = new BufferedReader(new InputStreamReader(System.in));
+			input();
+			sb = new StringBuilder();
+			solve();
+			System.out.println(sb);
 		}
-		int N = Integer.parseInt(br.readLine());
-		Node root = null;
-		for(int i=0; i<N; i++) {
-			st = new StringTokenizer(br.readLine(), " ");
-			String p = st.nextToken();
-			String l = st.nextToken();
-			String r = st.nextToken();
-			Node parent = a[p.charAt(0)-'A'];
-			Node right, left;
-			if(l.equals(".")) left = null;
-			else left = a[l.charAt(0)-'A'];
-			
-			if(r.equals(".")) right = null;
-			else right = a[r.charAt(0)-'A'];
-			
-			parent = t.makeTree(left, parent, right);
-			if(i==0) root = parent;
+		void solve() {
+			preorder(0);
+			sb.append('\n');
+			inorder(0);
+			sb.append('\n');
+			postorder(0);
 		}
-
-		t.preorderTraversal(root);
-		System.out.println();
-		t.inorderTraversal(root);
-		System.out.println();
-		t.postorderTraversal(root);
-
-
+		void preorder(int x) {
+			if(x==-1) return;
+			sb.append((char)(x+'A'));
+			preorder(graph[x][0]);
+			preorder(graph[x][1]);
+		}
+		void inorder(int x) {
+			if(x==-1) return;
+			inorder(graph[x][0]);
+			sb.append((char)(x+'A'));
+			inorder(graph[x][1]);
+		}
+		void postorder(int x) {
+			if(x==-1) return;
+			postorder(graph[x][0]);
+			postorder(graph[x][1]);
+			sb.append((char)(x+'A'));
+		}
+		void input() {
+			try {
+				N = Integer.parseInt(br.readLine());
+				graph = new int[N][2];
+				for(int i=0; i<N; i++) {
+					st = new StringTokenizer(br.readLine().trim());
+					String p = st.nextToken();
+					int cur = p.charAt(0) - 'A';
+					for(int j=0; j<2; j++) {
+						String lrstr = st.nextToken();
+						if(lrstr.equals(".")) {
+							graph[cur][j] = -1; 
+						} else {
+							graph[cur][j] = lrstr.charAt(0) - 'A';
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+	public static void main(String[] args) {
+		new P1991();
+	}
 }
