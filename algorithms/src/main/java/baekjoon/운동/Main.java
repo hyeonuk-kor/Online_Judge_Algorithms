@@ -10,7 +10,7 @@ public class Main {
 		boolean[][] visit;
 		P1956() {
 			br = new BufferedReader(new InputStreamReader(System.in));
-			answer = Integer.MAX_VALUE;
+			answer = MAX;
 			input();
 			solve();
 		}
