@@ -22,7 +22,7 @@ public class Main {
 			}
 			for(int r: root) {
 				if(r!=erase)
-					dfs(r, -1);
+				dfs(r, -1);
 			}
 			System.out.println(answer);
 		}
