@@ -15,9 +15,7 @@ public class Main {
 		void solve() {
 			for(int i=0; i<N; i++) {
 				for(int j=0; j<N; j++) {
-					if(i==0 || j==0 || i==N-1 || j==N-1) {
-						sb.append('*');
-					} else if(i==j || i==N-j-1) {
+					if(i==0 || j==0 || i==N-1 || j==N-1 || i==j || i==N-j-1) {
 						sb.append('*');
 					} else {
 						sb.append(' ');
