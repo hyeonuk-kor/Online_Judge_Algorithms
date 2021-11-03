@@ -5,34 +5,37 @@ public class Main {
 	static class P2573 {
 		BufferedReader br;
 		StringTokenizer st;
-		int N, M, board[][], count;
+		int N, M, board[][], melt[][], count;
 		boolean visit[][];
 		int dy[] = {0, 0, 1,-1};
 		int dx[] = {1,-1, 0, 0};
 		P2573() {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			input();
-			int time = 0;
-			while(count<2) {
+			visit = new boolean[N][M];
+			melt = new int[N][M];
+			int year = 0;
+			while(true) {
 				count = 0;
-				boolean check = bfs();
-				if(!check) {
-					time = 0;
-					break;
-				} else {
-					visit = new boolean[N][M];
-					for(int i=0; i<N; i++) {
-						for(int j=0; j<M; j++) {
-							if(!visit[i][j] && board[i][j]!=0) {
-								dfs(i, j);
-								count++;
-							}
+				for(int i=0; i<N; i++) {
+					for(int j=0; j<M; j++) {
+						if(board[i][j]!=0 && !visit[i][j]) {
+							dfs(i, j);
+							count++;
 						}
 					}
-					time++;
+				}
+				if(count==0) {
+					year = 0;
+					break;
+				} else if(count>=2) {
+					break;
+				} else {
+					year++;
+					melting();
 				}
 			}
-			System.out.println(time);
+			System.out.println(year);
 		}
 		private void print() {
 			for(int i=0; i<board.length; i++)
@@ -48,45 +51,26 @@ public class Main {
 					continue;
 				if(visit[ny][nx])
 					continue;
-				if(board[ny][nx]==0)
+				if(board[ny][nx]==0) {
+					melt[y][x]++;
 					continue;
+				}
 				dfs(ny, nx);
 			}
 		}
 		boolean isRange(int y, int x) {
 			return (y<0 || x<0 || y>=N || x>=M);
 		}
-		boolean bfs() {
-			Queue<int[]> q = new ArrayDeque<>();
+		void melting() {
 			for(int i=0; i<N; i++) {
 				for(int j=0; j<M; j++) {
 					if(board[i][j]!=0) {
-						q.add(new int[] {i, j});
+						board[i][j] = (board[i][j] - melt[i][j] < 0) ? 0 : board[i][j] - melt[i][j];
+						visit[i][j] = false;
+						melt[i][j] = 0;
 					}
 				}
 			}
-			if(q.isEmpty())
-				return false;
-			int copy[][] = new int[N][M];
-			while(!q.isEmpty()) {
-				int info[] = q.poll();
-				int y = info[0];
-				int x = info[1];
-				int count = 0;
-				for(int d=0; d<4; d++) {
-					int ny = y + dy[d];
-					int nx = x + dx[d];
-					if(isRange(ny, nx))
-						continue;
-					if(board[ny][nx]==0) {
-						count++;
-					}
-				}
-				int melt = board[y][x] - count;
-				copy[y][x] = (melt<0) ? 0 : melt;
-			}
-			board = copy;
-			return true;
 		}
 		void input() {
 			try {
