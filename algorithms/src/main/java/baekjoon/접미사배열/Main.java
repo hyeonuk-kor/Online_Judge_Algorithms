@@ -31,7 +31,7 @@ public class Main {
 		void solve() {
 			String substr = "";
 			for(int i=input.length-1; i>=0; i--) {
-				substr = String.valueOf(input[i]) + substr;
+				substr = input[i] + substr;
 				word.add(substr);
 			}
 			Collections.sort(word);

@@ -6,8 +6,11 @@ public class Main {
 		BufferedReader br;
 		StringTokenizer st;
 		int H, W, board[][];
-		int solve() {
+		P14719() {
 			input();
+			solve();
+		}
+		void solve() {
 			int sum = 0;
 			for(int i=0; i<H; i++) {
 				int count = 0;
@@ -18,9 +21,10 @@ public class Main {
 						break;
 					}
 				}
-				for(int j=0; j<W; j++) {
+				for(int j=W-1; j>=0; j--) {
 					if(board[i][j]==1) {
 						last_one = j;
+						break;
 					}
 				}
 				for(int j=first_one; j<last_one; j++) {
@@ -30,9 +34,9 @@ public class Main {
 				}
 				sum += count;
 			}
-			return sum;
+			System.out.println(sum);
 		}
-		private void input() {
+		void input() {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				st = new StringTokenizer(br.readLine());
@@ -47,11 +51,11 @@ public class Main {
 					}
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
 	}
 	public static void main(String[] args) {
-		System.out.println(new P14719().solve());
+		new P14719();
 	}
 }
