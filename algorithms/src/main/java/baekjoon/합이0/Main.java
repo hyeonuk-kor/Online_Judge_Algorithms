@@ -13,9 +13,11 @@ public class Main {
 		void solve() {
 			long answer = 0;
 			Arrays.sort(A, 1, N+1);
+
 			for(int i=1; i<=N-2; i++) {
 				int target = -A[i]; // A[i] 선택
 				int left = i+1, right = N;
+				int index = N;
 				while(left<right) { // A[left]+A[right]가 -A[i](target)을 찾으면 0에 가까울 것이다.
 					if(A[left]+A[right] > target) {
 						right--;
@@ -25,20 +27,13 @@ public class Main {
 							if(A[left]==A[right]) {
 								answer += right - left;
 							} else {
-								int find = A[right];
-								int l = left;
-								int r = right;
-								int res = right + 1;
-								while(l<=r) {
-									int mid = (l+r)/2;
-									if(A[mid]>=find) {
-										res = mid;
-										r = mid - 1;
-									} else {
-										l = mid + 1;
+								if(index>=right){
+									index = right;
+									while(index-1>=0 && A[index-1]==A[right]) {
+										index--;
 									}
 								}
-								answer += right - res + 1;
+								answer += right - index + 1;
 							}
 						}
 						left++;
@@ -66,3 +61,4 @@ public class Main {
 		new P3151();
 	}
 }
+
