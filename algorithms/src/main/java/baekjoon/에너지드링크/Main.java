@@ -22,7 +22,7 @@ public class Main {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			try {
 				N = Integer.parseInt(br.readLine());
-				energy_drink = new PriorityQueue<>(Collections.reverseOrder());
+				energy_drink = new PriorityQueue<>(Comparator.reverseOrder());
 				st = new StringTokenizer(br.readLine().trim());
 				for(int i=0; i<N; i++) {
 					energy_drink.add(Integer.parseInt(st.nextToken()));
