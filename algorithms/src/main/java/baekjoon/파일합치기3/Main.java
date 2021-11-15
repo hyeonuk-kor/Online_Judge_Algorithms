@@ -7,7 +7,7 @@ public class Main {
 		StringTokenizer st;
 		StringBuilder sb;
 		int T, K;
-		PriorityQueue<Integer> file, cost;
+		PriorityQueue<Long> file, cost;
 		P13975() {
 			sb = new StringBuilder();
 			input();
@@ -16,12 +16,12 @@ public class Main {
 		void solve() {
 			cost = new PriorityQueue<>();
 			for(int k=0; k<K-1; k++) {
-				int min = file.poll();
+				long min = file.poll();
 				min += file.poll();
 				file.add(min);
 				cost.add(min);
 			}
-			int sum = 0;
+			long sum = 0;
 			while(!cost.isEmpty())
 				sum += cost.poll();
 			sb.append(sum).append('\n');
@@ -35,7 +35,7 @@ public class Main {
 					st = new StringTokenizer(br.readLine().trim());
 					file = new PriorityQueue<>();
 					for(int k=0; k<K; k++)
-						file.add(Integer.parseInt(st.nextToken()));
+						file.add(Long.parseLong(st.nextToken()));
 					solve();
 				}
 				br.close();
