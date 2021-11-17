@@ -14,7 +14,7 @@ public class Main {
 			try {
 				String input = br.readLine();
 				while(input!=null && !input.isEmpty()) {
-					sb.append(input);
+					sb.append(input).append('\n');
 					input = br.readLine();
 				}
 			} catch (Exception e) {
