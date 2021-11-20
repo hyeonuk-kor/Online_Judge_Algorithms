@@ -13,6 +13,21 @@ public class Main {
 			input();
 			System.out.println(sb);
 		}
+		int lower_bound(int X) { // TreeMap에서 X 이상의 수 중, 제일 왼쪽 인덱스를 리턴하는 함수
+			int L = map.firstKey();
+			int R = map.lastKey();
+			int res = R + 1; // X 이상의 수 중, 제일 왼쪽 인덱스가 없다면? R+1을 반환한다.
+			while(L<=R) {
+				int mid = (L+R)/2;
+				if(map.floorKey(mid)>=X) {
+					res = mid;
+					R = mid - 1;
+				} else {
+					L = mid + 1;
+				}
+			}
+			return res;
+		}
 		void input() {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			try {
@@ -29,19 +44,8 @@ public class Main {
 				}
 				for(int m=0; m<M; m++) {
 					int power = Integer.parseInt(br.readLine());
-					int L = map.firstKey();
-					int R = map.lastKey();
-					int res = R + 1;
-					while(L<=R) {
-						int mid = (L+R)/2;
-						if(map.floorKey(mid)>=power) {
-							res = mid;
-							R = mid - 1;
-						} else {
-							L = mid + 1;
-						}
-					}
-					sb.append(map.get(res)).append('\n');
+					int result = lower_bound(power); // power에 해당하는 if문 index를 찾아
+					sb.append(map.get(result)).append('\n'); // 출력해주면 된다.
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
