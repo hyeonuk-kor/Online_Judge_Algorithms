@@ -20,8 +20,8 @@ public class 별찍기10 {
 	}
 
 	private static void draw(int y, int x, int size) {
-		
 		if((y/size)%3==1 && (x/size)%3==1) {
+			System.out.println(y+" "+x+" "+size);
 			sb.append(' ');
 		} else {
 			if(size/3==0) {
