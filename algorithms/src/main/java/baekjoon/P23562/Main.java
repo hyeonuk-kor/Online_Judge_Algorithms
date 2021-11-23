@@ -18,6 +18,8 @@ public class Main {
 			for(int i=0; i<n; i++) {
 				for(int j=0; j<m; j++) {
 					for(int k=1; k<=min_digeut_length; k++) {
+						if(i+k*3-1>=n || j+k*3-1>=m)
+							break;
 						min = Math.min(min, makeDigeut(i, j, k));
 					}
 				}
@@ -25,13 +27,11 @@ public class Main {
 			System.out.println(min);
 		}
 		int makeDigeut(int y, int x, int k) {
-			if(y+k*3-1>=n || x+k*3-1>=m)
-				return Integer.MAX_VALUE;
 			int sum = 0;
 			for(int i=0; i<n; i++) {
 				for(int j=0; j<m; j++) {
-					if(i>=y && j>=x && i<=y+3*k-1 && j<=x+3*k-1) { // ㄷ이 그려져야하는 범위라면
-						if(i>=y+k && i<=y+2*k-1 &&  j>=x+k) { //공백이 되어야 하는 부분
+					if(i>=y && j>=x && i<y+3*k && j<x+3*k) { // ㄷ이 그려져야하는 범위라면
+						if(i>=y+k && i<y+2*k &&  j>=x+k) { //공백이 되어야 하는 부분
 							if(board[i][j]=='#') {
 								sum += b;
 							}
