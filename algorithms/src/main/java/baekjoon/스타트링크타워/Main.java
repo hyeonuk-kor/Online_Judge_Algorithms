@@ -18,7 +18,8 @@ public class Main {
 		}
 		void pro() {
 			for(int i=0; i<N; i++) {
-				int calc = 0, cnt = 0;
+				int cnt = 0;
+				long calc = 0;
 				for(int n=0; n<=9; n++) {
 					boolean check = true;
 					for(int j=0; j<arr.length; j++) {
