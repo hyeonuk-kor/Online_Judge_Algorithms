@@ -12,7 +12,6 @@ public class Main {
 		void solve(char[] cstr) {
 			StringBuilder sb = new StringBuilder();
 			Arrays.sort(cstr);
-			int size = cstr.length;
 			if(cstr[0]!='0') {
 				System.out.println(-1);
 			} else {
