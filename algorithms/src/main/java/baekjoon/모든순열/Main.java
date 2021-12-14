@@ -1,6 +1,5 @@
 package baekjoon.모든순열;
 import java.io.*;
-import java.util.*;
 public class Main {
 	static class P10974 {
 		BufferedReader br;
