@@ -1,38 +1,34 @@
 package baekjoon;
-
-import java.util.Arrays;
-
+import java.io.*;
+import java.util.*;
 public class Main {
-	
-	public static int conv(int[] array) {
-		int number = 0;
-		for(int i=0; i<6; i++) {
-			number = number * 10 + array[i];
+	static class P4101 {
+		BufferedReader br;
+		StringTokenizer st;
+		StringBuilder sb;
+		void input() {
+			br = new BufferedReader(new InputStreamReader(System.in));
+			try {
+				while(true) {
+					st = new StringTokenizer(br.readLine().trim());
+					int a = Integer.parseInt(st.nextToken());
+					int b = Integer.parseInt(st.nextToken());
+					if(a==0 && b==0)
+						break;
+					sb.append(a>b?"Yes":"No").append('\n');
+				}
+				br.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		return number;
-	}
-	public static int[] inv_conv(int number) {
-		int array[] = new int[6];
-		for(int i=5; i>=0; i--) {
-			array[i] = number%10;
-			number/=10;
+		P4101() {
+			sb = new StringBuilder();
+			input();
+			System.out.println(sb);
 		}
-		return array;
 	}
-	
 	public static void main(String[] args) {
-		dfs(new int[]{1,2,3,4,5,6}, 0, 3, 0);
+		new P4101();
 	}
-
-	private static void dfs(int[] array, int l, int r, int number) {
-		if(l==3 && r==6) {
-			System.out.println(number);
-			return;
-		}
-		if(l<3)
-			dfs(array, l+1, r, number*10+array[l]);
-		if(r<6)
-			dfs(array, l, r+1, number*10+array[r]);
-	}
-
 }
