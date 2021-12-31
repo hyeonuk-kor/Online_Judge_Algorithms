@@ -34,7 +34,6 @@ public class Main {
 			set.add(new ArrayList<>(array));
 			return;
 		}
-		
 		for(int i=number; i<=N; i++) {
 			array.add(i);
 			getNumber(i, index+1);
