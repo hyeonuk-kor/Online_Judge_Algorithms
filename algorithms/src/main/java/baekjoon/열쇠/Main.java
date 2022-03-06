@@ -6,7 +6,7 @@ public class Main {
 		BufferedReader br;
 		StringTokenizer st;
 		StringBuilder sb;
-		int board_width, board_height, answer;
+		int board_width, board_height, answer, alpha;
 		char board[][];
 		boolean keys[];
 		P9328() {
@@ -49,7 +49,7 @@ public class Main {
 			}
 		}
 		void process() {
-			boolean visit[][][] = new boolean[board_height][board_width][100];
+			boolean visit[][][] = new boolean[board_height][board_width][55];
 			boolean isOpen[][] = new boolean[board_height][board_width];
 			int dy[] = {0, 0, 1, -1};
 			int dx[] = {1, -1, 0, 0};
