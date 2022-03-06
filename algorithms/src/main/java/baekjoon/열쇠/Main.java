@@ -6,9 +6,11 @@ public class Main {
 		BufferedReader br;
 		StringTokenizer st;
 		StringBuilder sb;
-		int board_width, board_height, answer, alpha;
+		int board_width, board_height, answer, document;
+		int dy[] = {0, 0, 1, -1};
+		int dx[] = {1, -1, 0, 0};
 		char board[][];
-		boolean keys[];
+		boolean keys[], visit[][][];
 		P9328() {
 			sb = new StringBuilder();
 			input();
@@ -24,6 +26,7 @@ public class Main {
 					board_height = Integer.parseInt(st.nextToken())+2;
 					board_width = Integer.parseInt(st.nextToken())+2;
 					board = new char[board_height][board_width];
+					visit = new boolean[board_height][board_width][55];
 					for(int i=0; i<board.length; i++) {
 						Arrays.fill(board[i], '.');
 					}
@@ -31,6 +34,8 @@ public class Main {
 						String input = br.readLine();
 						for(int j=1; j<board_width-1; j++) {
 							board[i][j] = input.charAt(j-1);
+							if(board[i][j]=='$')
+								document++;
 						}
 					}
 					String key = br.readLine();
@@ -39,7 +44,8 @@ public class Main {
 							keys[k-'a'] = true;
 						}
 					}
-					process();
+					//process_bfs();
+					process_dfs(0, 0, 0);
 					sb.append(answer).append('\n');
 					answer = 0;
 				}
@@ -48,11 +54,36 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-		void process() {
-			boolean visit[][][] = new boolean[board_height][board_width][55];
-			boolean isOpen[][] = new boolean[board_height][board_width];
-			int dy[] = {0, 0, 1, -1};
-			int dx[] = {1, -1, 0, 0};
+		void process_dfs(int y, int x, int time) {
+			if(answer==document)
+				return;
+			visit[y][x][time] = true;
+			for(int d=0; d<4; d++) {
+				int ny = y + dy[d];
+				int nx = x + dx[d];
+				if(isNotRange(ny, nx)) continue;
+				if(visit[ny][nx][time])	continue;
+				if(board[ny][nx]!='*') {
+					boolean check = true;
+					if(board[ny][nx]=='$') {
+						answer++;
+					} else if(board[ny][nx]>='a' && board[ny][nx]<='z') {
+						if(!keys[board[ny][nx]-'a']) {
+							keys[board[ny][nx]-'a'] = true;
+							time++;
+						}
+					} else if(board[ny][nx]>='A' && board[ny][nx]<='Z') {
+						if(!keys[board[ny][nx]-'A'])
+							check = false;
+					}
+					if(check) {
+						board[ny][nx] = '.';
+						process_dfs(ny, nx, time);
+					}
+				}
+			}
+		}
+		void process_bfs() {
 			Queue<int[]> q = new ArrayDeque<>();
 			q.add(new int[] {0, 0, 0});
 			visit[0][0][0] = true;
@@ -85,10 +116,7 @@ public class Main {
 						visit[ny][nx][time] = true;
 					} else if(board[ny][nx]>='A' && board[ny][nx]<='Z') {
 						if(keys[board[ny][nx]-'A']) {
-							if(!isOpen[ny][nx]) {
-								isOpen[ny][nx] = true;
-								time++;
-							}
+							time++;
 							board[ny][nx] = '.';
 							q.add(new int[] {ny, nx, time});
 							visit[ny][nx][time] = true;
