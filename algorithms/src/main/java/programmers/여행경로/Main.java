@@ -4,7 +4,7 @@ public class Main {
 	static class Solution {
 		Solution() {
 			String[][] tickets = {{"ICN", "SFO"}, {"ICN", "ATL"}, {"SFO", "ATL"}, {"ATL", "ICN"}, {"ATL", "SFO"}};
-			System.out.println(solution(tickets));
+			//System.out.println(solution(tickets));
 		}
 		List<String> list;
 		boolean visit[];
